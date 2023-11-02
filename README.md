@@ -85,13 +85,12 @@ An Example Game Statitic:
 
 * (5 points) react/vue.js to make my frontend of my game look better
     * used one of these technologies as my frontend framework, it's challenging so I've assigned it 5 points
-* (4 points) Perform client side form validation using a JavaScript library
-    * see <code>cs.nyu.edu/~jversoza/ait-final/my-form</code>
-    * if you put in a number that's greater than 5, an error message will appear in the dom
-* (5 points) vue.js
-    * used vue.js as the frontend framework; it's a challenging library to learn, so I've assigned it 5 points
+* (1 points) P5.js 
+    * used p5.js to create nice 2d graphics and interactions
+* (3 points) Minesweeper AI
+    * used probablistic algorithms to find the best move
 
-10 points total out of 8 required points (___TODO__: addtional points will __not__ count for extra credit)
+9 points total out of 8 required points 
 
 
 ## [Link to Initial Main Project File](app.mjs) 
