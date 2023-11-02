@@ -87,8 +87,10 @@ An Example Game Statitic:
     * used one of these technologies as my frontend framework, it's challenging so I've assigned it 5 points
 * (1 points) P5.js 
     * used p5.js to create nice 2d graphics and interactions
+    * good for showing the game 
 * (3 points) Minesweeper AI
     * used probablistic algorithms to find the best move
+    * used for giving hints for player
 
 9 points total out of 8 required points 
 
