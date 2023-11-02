@@ -26,7 +26,7 @@ An Example User:
 {
   username: "shannonshopper",
   hash:  "an optional password hash",
-  lists: [1, 3, 5, 6]
+  IdList: [1, 3, 5, 6]
 }
 ```
 
@@ -51,23 +51,23 @@ An Example Game Statitic:
 
 (__TODO__: wireframes for all of the pages on your site; they can be as simple as photos of drawings or you can use a tool like Balsamiq, Omnigraffle, etc.)
 
-/list/create - page for creating a new shopping list
+/minesweeper- page for the main game
 
-![list create](documentation/list-create.png)
+![list create](documentation/minesweeper.jpg)
 
-/list - page for showing all shopping lists
+/minesweeper/tutorial - page for interactive tutorial
 
-![list](documentation/list.png)
+![list](documentation/minesweeper-tutorial.jpg)
 
-/list/slug - page for showing specific shopping list
+/minesweeper/leaderboard - page for login/register and leaderboard table
 
-![list](documentation/list-slug.png)
+![list](documentation/minesweeper-leaderboard.jpg)
 
 ## Site map
 
 (__TODO__: draw out a site map that shows how pages are related to each other)
 
-Here's a [complex example from wikipedia](https://upload.wikimedia.org/wikipedia/commons/2/20/Sitemap_google.jpg), but you can create one without the screenshots, drop shadows, etc. ... just names of pages and where they flow to.
+![list](documentation/path_graph.jpg)
 
 ## User Stories or Use Cases
 
@@ -76,19 +76,15 @@ Here's a [complex example from wikipedia](https://upload.wikimedia.org/wikipedia
 1. as non-registered user, I can play the game normally
 2. as a user, I can log in to the site
 3. as a user, I can view my previous game statistics
-4. as a user, I can view all of the grocery lists I've created in a single list
-5. as a user, I can add items to an existing grocery list
-6. as a user, I can cross off items in an existing grocery list
+4. as a user, I can view and play with the interactive tutorial
+5. as a user, I can view the leaderboard containing the top n players
 
 ## Research Topics
 
 (__TODO__: the research topics that you're planning on working on along with their point values... and the total points of research topics listed)
 
-* (5 points) Integrate user authentication
-    * I'm going to be using passport for user authentication
-    * And account has been made for testing; I'll email you the password
-    * see <code>cs.nyu.edu/~jversoza/ait-final/register</code> for register page
-    * see <code>cs.nyu.edu/~jversoza/ait-final/login</code> for login page
+* (5 points) react/vue.js to make my frontend of my game look better
+    * used one of these technologies as my frontend framework, it's challenging so I've assigned it 5 points
 * (4 points) Perform client side form validation using a JavaScript library
     * see <code>cs.nyu.edu/~jversoza/ait-final/my-form</code>
     * if you put in a number that's greater than 5, an error message will appear in the dom
@@ -106,6 +102,6 @@ Here's a [complex example from wikipedia](https://upload.wikimedia.org/wikipedia
 
 (__TODO__: list any tutorials/references/etc. that you've based your code off of)
 
-1. [passport.js authentication docs](http://passportjs.org/docs) - (add link to source code that was based on this)
+1. [p5.js reference](https://p5js.org/reference/) - (add link to source code that was based on this)
 2. [tutorial on vue.js](https://vuejs.org/v2/guide/) - (add link to source code that was based on this)
 
