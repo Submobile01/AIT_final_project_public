@@ -53,21 +53,21 @@ An Example Game Statitic:
 
 /minesweeper- page for the main game
 
-![list create](documentation/minesweeper.jpg)
+![list create](documentation/minesweeper.JPG)
 
 /minesweeper/tutorial - page for interactive tutorial
 
-![list](documentation/minesweeper-tutorial.jpg)
+![list](documentation/minesweeper-tutorial.JPG)
 
 /minesweeper/leaderboard - page for login/register and leaderboard table
 
-![list](documentation/minesweeper-leaderboard.jpg)
+![list](documentation/minesweeper-leaderboard.JPG)
 
 ## Site map
 
 (__TODO__: draw out a site map that shows how pages are related to each other)
 
-![list](documentation/path_graph.jpg)
+![list](documentation/path_graph.JPG)
 
 ## User Stories or Use Cases
 
