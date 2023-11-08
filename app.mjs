@@ -33,10 +33,12 @@ const logReq = (req, res, next) => {
 
 // body parser (req.body)
 app.use(express.urlencoded({ extended: false }));
-app.use(logReq)
+app.use(logReq);
 
 
-
+app.get('/', (req, res) => {
+    res.render('main.hbs', {});
+})
 
 
 app.listen(process.env.PORT || 3000);
