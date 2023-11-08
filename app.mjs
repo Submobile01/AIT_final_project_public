@@ -10,6 +10,8 @@ const __dirname = path.dirname(__filename);
 import "./db.mjs";
 import mongoose from 'mongoose';
 
+app.use(express.static(path.join(__dirname, 'public')));
+
 app.use(session({
     secret: 'your-secret-key', // Change this to a secret key
     resave: false,
@@ -19,8 +21,19 @@ app.use(session({
 // configure templating to hbs
 app.set('view engine', 'hbs');
 
+const logReq = (req, res, next) => {
+    let message = "";
+    message+= `Method: ${req.method}\n`;
+    message+= `Path: ${req.path}\n`;
+    message+= `Query: ${JSON.stringify(req.query)}\n`;
+    message+= `Body: ${JSON.stringify(req.body)}`;
+    console.log(message);
+    next();
+  };
+
 // body parser (req.body)
 app.use(express.urlencoded({ extended: false }));
+app.use(logReq)
 
 
 

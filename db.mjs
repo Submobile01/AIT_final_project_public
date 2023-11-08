@@ -20,3 +20,4 @@ const GameStatsSchema = new mongoose.Schema(
 )
 
 mongoose.model('User', UserSchema);
+mongoose.model('GameStat', GameStatsSchema);
