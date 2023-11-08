@@ -41,7 +41,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(logReq);
 
 
-app.get('/', (req, res) => {
+app.get('/api', (req, res) => {
     res.setHeader('Cache-Control', 's-max-age=1, stale-while-revalidate');
     res.render('main.hbs', {});
 })
