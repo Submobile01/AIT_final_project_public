@@ -9,7 +9,7 @@ const app = express();
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-console.log(process.env.DSN)
+console.log(process.env.DSN);
 
 
 //import "./db.mjs";
@@ -46,7 +46,7 @@ app.get('/', (req, res) => {
     res.render('main.hbs', {});
 })
 
-module.exports = app
+export default app;
 
-app.listen(process.env.PORT || 3000);
+// app.listen(process.env.PORT || 3000);
 
