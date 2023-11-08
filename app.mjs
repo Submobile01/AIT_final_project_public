@@ -1,8 +1,9 @@
+import "./config.mjs";
 import express from 'express'
 import path from 'path'
 import session from 'express-session'
 import { fileURLToPath } from 'url';
-import "./config.mjs";
+
 
 const app = express();
 const __filename = fileURLToPath(import.meta.url);
