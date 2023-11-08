@@ -3,7 +3,7 @@
     "builds": [
         {
           
-          "src": "api/index.mjs",
+          "src": "index.mjs",
           
           "use": "@now/node"
         }

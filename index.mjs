@@ -1,4 +1,4 @@
-import "../config.mjs";
+import "./config.mjs";
 import express from 'express'
 import path from 'path'
 import session from 'express-session'
@@ -41,7 +41,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(logReq);
 
 
-app.get('/api', (req, res) => {
+app.get('/', (req, res) => {
     res.setHeader('Cache-Control', 's-max-age=1, stale-while-revalidate');
     res.render('main.hbs', {});
 })
