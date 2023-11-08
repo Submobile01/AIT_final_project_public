@@ -1,4 +1,4 @@
-import "./config.mjs";
+import "../config.mjs";
 import express from 'express'
 import path from 'path'
 import session from 'express-session'
@@ -42,8 +42,11 @@ app.use(logReq);
 
 
 app.get('/', (req, res) => {
+    res.setHeader('Cache-Control', 's-max-age=1, stale-while-revalidate');
     res.render('main.hbs', {});
 })
 
+module.exports = app
 
 app.listen(process.env.PORT || 3000);
+
