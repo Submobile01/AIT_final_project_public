@@ -24,6 +24,7 @@ app.use(session({
 }));
 
 // configure templating to hbs
+app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
 
 const logReq = (req, res, next) => {
