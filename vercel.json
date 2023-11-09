@@ -1,13 +1,6 @@
 
 {
-    "builds": [
-        {
-          
-          "src": "index.mjs",
-          
-          "use": "@vercel/node"
-        }
-    ],
+    
     "routes": [
         {
             
