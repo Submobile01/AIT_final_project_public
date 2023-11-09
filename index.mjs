@@ -43,8 +43,8 @@ app.use(logReq);
 
 app.get('/', (req, res) => {
     res.setHeader('Cache-Control', 's-max-age=1, stale-while-revalidate');
-    res.send("Hello")
-    //res.render('main.hbs', {});
+    //res.send("Hello")
+    res.render('home.hbs', {});
 })
 
 export default app;
