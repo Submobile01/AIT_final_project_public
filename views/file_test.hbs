@@ -5,3 +5,19 @@
     <input type="text" id="password" name="password" placeholder="password" ><br>
     <button type="submit"> Submit </button>
 </form>
+
+{{#if userList}}
+    <table class="review-table">
+        <tr>
+            <th>Username</th>
+            <th>Password</th>
+        </tr>
+        {{#each reviewList}}
+            <tr>
+
+                <td>{{username}}</td>
+                <td>{{password}}</td>
+            </tr>
+        {{/each}}
+    </table>
+{{/if}}

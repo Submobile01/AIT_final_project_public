@@ -47,12 +47,28 @@ app.get('/', (req, res) => {
     res.render('minesweeper.hbs', {});
 })
 
-app.get('/leaderboard', (req, res) => {
+let userList;
+
+app.get('/leaderboard', async(req, res) => {
     res.setHeader('Cache-Control', 's-max-age=1, stale-while-revalidate');
-    res.render('file_test.hbs', {})
-})
-app.post('/leaderboard', (req, res) => {
+    userList = await User.find();
+    res.render('file_test.hbs', {userList});
     
+
+})
+
+
+
+app.post('/leaderboard', async (req, res) => {
+    const { username, password } = req.body;
+
+  // Create a new review document in your MongoDB using Mongoose
+  const user = new User({
+      username,
+      password
+  });
+  await user.save();
+  res.redirect('/leaderboard');
 })
 
 export default app;

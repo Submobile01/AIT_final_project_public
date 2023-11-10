@@ -5,7 +5,7 @@ mongoose.connect(process.env.DSN);
 
 const UserSchema = new mongoose.Schema(
     {username: String,
-    hashedPassword: String,
+    password: String,
     gameList: Array,
 });
 
