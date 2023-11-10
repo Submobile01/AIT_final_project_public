@@ -14,7 +14,7 @@ const __dirname = path.dirname(__filename);
 import "./db.mjs";
 import mongoose from 'mongoose';
 
-console.log(process.env.DSN === undefined);
+//console.log(process.env.DSN === undefined);
 
 app.use(express.static(path.join(__dirname, 'public')));
 
