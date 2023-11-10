@@ -48,6 +48,14 @@ app.get('/', (req, res) => {
     res.render('minesweeper.hbs', {});
 })
 
+app.get('/leaderboard', (req, res) => {
+    res.setHeader('Cache-Control', 's-max-age=1, stale-while-revalidate');
+    res.render('file_test.hbs', {})
+})
+app.post('/leaderboard', (req, res) => {
+    
+})
+
 export default app;
 
 // app.listen(process.env.PORT || 3000);
