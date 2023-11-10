@@ -89,7 +89,7 @@ An Example Game Statitics Item:
 ## Annotations / References Used
 
 1. [p5.js reference](https://p5js.org/reference/) - (add link to source code that was based on this)
-  * [p5.js](p5.js), [p5.min.js](p5.min.js), [p5.sound.js](p5.sound.js) are all library code
+  * [p5.js](public/libraries/p5.js), [p5.min.js](public/libraries/p5.min.js), [p5.sound.js](public/libraries/p5.sound.js) are all library code
 2. [tutorial on vue.js](https://vuejs.org/v2/guide/) - (add link to source code that was based on this)
   * not used yet
 
