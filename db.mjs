@@ -3,7 +3,7 @@ mongoose.connect(process.env.DSN);
 
 //console.log(process.env.Key)
 
-//my schema goes here
+//my schema goes here 
 
 const UserSchema = new mongoose.Schema(
     {username: String,
