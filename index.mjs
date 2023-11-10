@@ -17,6 +17,12 @@ import mongoose from 'mongoose';
 const User = mongoose.model('User');
 console.log(process.env.DSN);
 
+if (mongoose.connection.readyState === 1) {
+    console.log('Database connection is established');
+  } else {
+    console.log('Database connection is not established');
+  }
+
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(session({
