@@ -12,7 +12,7 @@ const __dirname = path.dirname(__filename);
 console.log(process.env.DSN);
 
 
-//import "./db.mjs";
+import "./db.mjs";
 import mongoose from 'mongoose';
 
 app.use(express.static(path.join(__dirname, 'public')));
