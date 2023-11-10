@@ -15,7 +15,7 @@ import "./db.mjs";
 import mongoose from 'mongoose';
 
 const User = mongoose.model('User');
-//console.log(process.env.DSN === undefined);
+console.log(process.env.DSN);
 
 app.use(express.static(path.join(__dirname, 'public')));
 
