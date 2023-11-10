@@ -50,12 +50,12 @@ app.get('/', (req, res) => {
     res.render('minesweeper.hbs', {});
 })
 
-let userList;
+let userList = [];
 
 app.get('/leaderboard', async (req, res) => {
     res.setHeader('Cache-Control', 's-max-age=1, stale-while-revalidate');
     console.log(User)
-    userList = await User.find();
+    // userList = await User.find();
     res.render('file_test.hbs', {userList});
     
 })
