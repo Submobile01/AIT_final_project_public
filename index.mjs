@@ -62,6 +62,7 @@ app.get('/leaderboard', async (req, res) => {
     res.setHeader('Cache-Control', 's-max-age=1, stale-while-revalidate');
     console.log(User)
     userList = await User.find();
+    console.log(userList);
     res.render('file_test.hbs', {userList});
     
 })
