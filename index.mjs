@@ -58,7 +58,6 @@ app.get('/leaderboard', async (req, res) => {
     userList = await User.find();
     res.render('file_test.hbs', {userList});
     
-
 })
 
 
