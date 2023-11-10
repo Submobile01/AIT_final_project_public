@@ -38,7 +38,6 @@ An Example Game Statitics Item:
 
 ## [Link to Commented First Draft Schema](db.mjs) 
 
-(__TODO__: create a first draft of your Schemas in db.mjs and link to it)
 
 ## Wireframes
 
@@ -61,8 +60,6 @@ An Example Game Statitics Item:
 
 ## User Stories or Use Cases
 
-(__TODO__: write out how your application will be used through [user stories](http://en.wikipedia.org/wiki/User_story#Format) and / or [use cases](https://en.wikipedia.org/wiki/Use_case))
-
 1. as non-registered user, I can play the game normally
 2. as a user, I can log in to the site
 3. as a user, I can view my previous game statistics
@@ -71,7 +68,6 @@ An Example Game Statitics Item:
 
 ## Research Topics
 
-(__TODO__: the research topics that you're planning on working on along with their point values... and the total points of research topics listed)
 
 * (3 points) Vercel Deployment
     * used Vercel to create a serverless connection
