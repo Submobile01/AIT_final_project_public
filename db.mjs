@@ -1,5 +1,6 @@
 import mongoose from 'mongoose';
-mongoose.connect(process.env.DSN);
+mongoose.connect(process.env.Key);
+
 
 //my schema goes here
 
