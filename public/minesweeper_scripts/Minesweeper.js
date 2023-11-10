@@ -52,12 +52,12 @@ function setup() {
   
   restart();
   soundFiles = [];
-  chu = loadSound("data/chu.wav");soundFiles.push(chu);
-  yes = loadSound("data/yes.wav");soundFiles.push(yes);
-  hua = loadSound("data/hua.wav");soundFiles.push(hua);
-  bang = loadSound("data/bang.wav");soundFiles.push(bang);
-  wow = loadSound("data/wow.wav");soundFiles.push(wow);
-  ding = loadSound("data/ding.wav");soundFiles.push(ding);
+  chu = loadSound("/data/chu.wav");soundFiles.push(chu);
+  yes = loadSound("/data/yes.wav");soundFiles.push(yes);
+  hua = loadSound("/data/hua.wav");soundFiles.push(hua);
+  bang = loadSound("/data/bang.wav");soundFiles.push(bang);
+  wow = loadSound("/data/wow.wav");soundFiles.push(wow);
+  ding = loadSound("/data/ding.wav");soundFiles.push(ding);
   volumeSlider = document.getElementById("volume-slider");
   updateSoundVolume();
   if(volumeSlider) {volumeSlider.addEventListener("input", updateSoundVolume);}
@@ -116,6 +116,7 @@ function mousePressed() {
 }
 function mouseReleased() {
     // when playing
+    console.log(mouseButton);
     if (gameStage === 1) {
       const y = Math.floor(mouseY / sideL);
       const x = Math.floor(mouseX / sideL);
