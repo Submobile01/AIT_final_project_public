@@ -11,7 +11,7 @@ const __dirname = path.dirname(__filename);
 
 
 
-//import "./db.mjs";
+import "./db.mjs";
 import mongoose from 'mongoose';
 
 //console.log(process.env.DSN === undefined);
