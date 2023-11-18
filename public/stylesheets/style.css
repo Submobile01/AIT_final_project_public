@@ -1,51 +1,105 @@
-body {padding: 0; margin: 0;}
-            .container {
-                text-align: center;
-                margin-left:18%;
-                margin-right: 18%;
-                margin-top: 20px;
-            }
+    body {padding: 0; margin: 0;}
+    .container {
+        text-align: center;
+        margin-left:18%;
+        margin-right: 18%;
+        margin-top: 20px;
+    }
 
 
-            .content-wrapper {
-                display: flex;
-                justify-content: center;
-                text-align: left;
-                align-items: flex-start;
-            }
-            
-            .canvas-container {
-                display: flex;
-                justify-content: center;
-                align-items: center;
-            }
+    .content-wrapper {
+        display: flex;
+        justify-content: center;
+        text-align: left;
+        align-items: flex-start;
+    }
+    
+    .canvas-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
 
-            .main-title {
-                font-family: "sacramento", cursive;
-            }
+    .main-title {
+        font-family: "sacramento", cursive;
+    }
 
-            .section-title {
-                font-family: "Lobster", cursive;
-                color:#2f9f4b;
-            }
+    .section-title {
+        font-family: "Lobster", cursive;
+        color:#2f9f4b;
+    }
 
-            .fancy-text {
-                font-family: "sacramento", cursive;
-                color:rgb(46, 92, 148);
-            }
-            
-            em {
-                color:rgba(0, 0, 0, 0.885);
-            }
+    .fancy-text {
+        font-family: "sacramento", cursive;
+        color:rgb(46, 92, 148);
+    }
+    
+    em {
+        color:rgba(0, 0, 0, 0.885);
+    }
 
-            .large{
-                font-size:30px;
+    .large{
+        font-size:30px;
 
-            }
-            
-            
-            p {
-                margin-left: 20px;
-                /* Additional styling for the game description */
-            }
-	
+    }
+    
+    
+    p {
+        margin-left: 20px;
+        /* Additional styling for the game description */
+    }
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #f0f0f0;
+    }
+
+    #container {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+        background-color: #fff;
+        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    header {
+        text-align: center;
+        padding: 20px 0;
+    }
+
+    h1 {
+        font-size: 36px;
+        color: #333;
+    }
+
+    h3 {
+        font-size: 18px;
+        color: #666;
+    }
+
+    nav ul {
+        list-style: none;
+        padding: 0;
+        text-align: center;
+    }
+
+    nav li {
+        display: inline-block;
+        margin: 0 20px;
+    }
+
+    nav a {
+        text-decoration: none;
+        font-size: 18px;
+        color: #333;
+    }
+
+    nav a:hover {
+        color: #007BFF;
+    }
+
+    #content {
+        padding: 20px;
+        background-color: #f9f9f9;
+    }
