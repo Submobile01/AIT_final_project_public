@@ -67,6 +67,13 @@ app.get('/leaderboard', async (req, res) => {
     
 })
 
+app.post('/', async (req,res) => {
+    //const sId = req.sessionID;
+    const data = await JSON.parse(req.body)
+    
+    res.json({ message: data.thisTime + 'Data received successfully!' });
+})
+
 
 
 app.post('/leaderboard', async (req, res) => {

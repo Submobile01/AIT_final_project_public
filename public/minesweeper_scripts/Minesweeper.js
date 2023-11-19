@@ -23,7 +23,7 @@ let volumeSlider;
 
 
 function setup() {
-  gameCanvas = createCanvas(800, 600);
+  const gameCanvas = createCanvas(800, 600);
   gameCanvas.parent("main-canvas");
   // canvasDiv = document.getElementById("canvas-container");
   // if(canvasDiv) canvasDiv.appendChild(gameCanvas);
@@ -42,7 +42,7 @@ function setup() {
     densMine = parseInt(slider.value)/100;
     // Update the game variable using the slider value
     restart();
-    console.log("mine density is ", densMine);
+    //console.log("mine density is ", densMine);
   });}
   
   restart();
@@ -59,7 +59,7 @@ function setup() {
   updateSoundVolume();
   if(volumeSlider) {volumeSlider.addEventListener("input", updateSoundVolume);}
 
-
+  //prevent default behaviors that interrupts the gamePlay
   for (const element of document.getElementsByClassName("p5Canvas")) {
     element.addEventListener("contextmenu", (e) => e.preventDefault());
   }
@@ -182,6 +182,7 @@ function mouseReleased() {
     if (gameStage === 2) {
       drawAllMines();
       drawRestart();
+      //if in range of button
       if (
         mouseX > width * 0.45 &&
         mouseX < width * 0.55 &&
@@ -566,19 +567,39 @@ function mouseReleased() {
   }
   
 
-  function drawWinBoard() {
+  async function drawWinBoard() {
     //the rectangle
     fill(color(130, 130, 210, 130));
     noStroke();
     rect(width / 3, height / 4, width / 3, height / 2, 55);
+
+    const thisTime = endTime - startTime;
+    
+    const bestTimeRes = await fetch('/', {
+      method: 'POST', 
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({thisTime}),
+    })
+
+    const bestTimeData = await bestTimeRes.json()
+    //message
+    console.log(bestTimeData.message)
+    // const bestTime = bestTimeData.
+
   
     //the words
     let bestTimeString;
-    if(!bestTime) {bestTime = 0;}
-    const thisTime = endTime - startTime;
+    //if(!bestTime) {bestTime = 0;}
+    
     if (thisTime < bestTime || bestTime === 0) {
       bestTime = thisTime;
     }
+
+    //fetch
+
+    
   
     if (bestTime === 0) {bestTimeString = "--";}
     else {bestTimeString = bestTime + "";}
