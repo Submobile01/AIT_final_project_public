@@ -4,7 +4,7 @@ let sideL;
 let blocks;
 let skip = false;
 let f;
-let soundFiles = {};
+let soundFiles;
 let gameStage; //1-game, 2-gameOver, 3-youWon
 let startTime;
 let endTime;
@@ -638,5 +638,5 @@ function mouseReleased() {
    */
   function updateSoundVolume(){
     const volume = volumeSlider.value / 100;
-    for(let [key, sound] of soundFiles.entries()) {sound.setVolume(volume);}
+    for(const sound of soundFiles.values()) {sound.setVolume(volume);}
   }
