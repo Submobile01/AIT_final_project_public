@@ -4,7 +4,7 @@ let sideL;
 let blocks;
 let skip = false;
 let f;
-let soundFiles;
+let soundFiles = {};
 let gameStage; //1-game, 2-gameOver, 3-youWon
 let startTime;
 let endTime;
@@ -65,7 +65,7 @@ function setup() {
   }
 }
 
-function draw() {
+async function draw() {
   if (gameStage === 1) {
 
   } else if (gameStage === 2) {
@@ -77,7 +77,7 @@ function draw() {
         blocks[i][j].drawIt();
       }
     }
-    drawWinBoard();
+    await drawWinBoard();
     for (let i = 0; i < fireworks.length; i++) {
       if (fireworks[i].inBound()) {
         fireworks[i].drawIt();
