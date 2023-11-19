@@ -77,7 +77,7 @@ async function draw() {
         blocks[i][j].drawIt();
       }
     }
-    await drawWinBoard();
+    drawWinBoard();
     for (let i = 0; i < fireworks.length; i++) {
       if (fireworks[i].inBound()) {
         fireworks[i].drawIt();
@@ -567,7 +567,7 @@ function mouseReleased() {
   }
   
 
-  async function drawWinBoard() {
+  function drawWinBoard() {
     //the rectangle
     fill(color(130, 130, 210, 130));
     noStroke();
@@ -575,15 +575,15 @@ function mouseReleased() {
 
     const thisTime = endTime - startTime;
     
-    const bestTimeRes = await fetch('/', {
-      method: 'POST', 
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({thisTime}),
-    })
+    // const bestTimeRes = await fetch('/', {
+    //   method: 'POST', 
+    //   headers: {
+    //     'Content-Type': 'application/json',
+    //   },
+    //   body: JSON.stringify({thisTime}),
+    // })
 
-    const bestTimeData = await bestTimeRes.json()
+    // const bestTimeData = await bestTimeRes.json()
     //message
     console.log(bestTimeData.message)
     // const bestTime = bestTimeData.
