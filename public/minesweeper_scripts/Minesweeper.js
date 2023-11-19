@@ -4,7 +4,12 @@ let sideL;
 let blocks;
 let skip = false;
 let f;
-let soundFiles;
+let chu;
+let yes;
+let hua;
+let bang;
+let wow;
+let ding;
 let gameStage; //1-game, 2-gameOver, 3-youWon
 let startTime;
 let endTime;
@@ -18,7 +23,7 @@ let bestTime;
 let fireworks;
 let remainingBlocks;
 let volumeSlider;
- 
+
 
 
 
@@ -47,19 +52,19 @@ function setup() {
   
   restart();
 
-  //load sound files
-  soundFiles = {};
-  chu = loadSound("/data/chu.wav");soundFiles={...soundFiles, chu};
-  yes = loadSound("/data/yes.wav");soundFiles={...soundFiles, yes};
-  hua = loadSound("/data/hua.wav");soundFiles={...soundFiles, hua};
-  bang = loadSound("/data/bang.wav");soundFiles={...soundFiles, bang};;
-  wow = loadSound("/data/wow.wav");soundFiles={...soundFiles, wow};;
-  ding = loadSound("/data/ding.wav");soundFiles={...soundFiles, ding};;
+  //load
+  soundFiles = [];
+  chu = loadSound("/data/chu.wav");soundFiles.push(chu);
+  yes = loadSound("/data/yes.wav");soundFiles.push(yes);
+  hua = loadSound("/data/hua.wav");soundFiles.push(hua);
+  bang = loadSound("/data/bang.wav");soundFiles.push(bang);
+  wow = loadSound("/data/wow.wav");soundFiles.push(wow);
+  ding = loadSound("/data/ding.wav");soundFiles.push(ding);
   volumeSlider = document.getElementById("volume-slider");
   updateSoundVolume();
   if(volumeSlider) {volumeSlider.addEventListener("input", updateSoundVolume);}
 
-  //prevent default behaviors that interrupts gameplay
+
   for (const element of document.getElementsByClassName("p5Canvas")) {
     element.addEventListener("contextmenu", (e) => e.preventDefault());
   }
@@ -145,7 +150,7 @@ function mouseReleased() {
           clickCount++;
           activateBlock(y, x);
         } else if (mouseButton === RIGHT) {
-          soundFiles.chu.play();
+          chu.play();
           if (theBlock.getState() === Block.FLAGSTATE) {
             theBlock.setState(Block.ORIGSTATE);
             flagCount--;
@@ -161,7 +166,7 @@ function mouseReleased() {
       }
       updateRemainingBlocks();
       if (blockCount === rows * columns - numMine) {
-        soundFiles.yes.play();
+        yes.play();
         gameStage = 3;
         for (let i = 0; i < 8; i++) {
           let ranSign = 1;
@@ -200,7 +205,7 @@ function mouseReleased() {
       ) {
         restart();
       } else {
-        soundFiles.hua.play();
+        hua.play();
       }
       for (let i = 0; i < 8; i++) {
         let ranSign = 1;
@@ -469,15 +474,15 @@ function mouseReleased() {
     if (theBlock.getState() === Block.ORIGSTATE || theBlock.getState() === 3) {//?
       if (theBlock.getNumber() === -1) {
         gameStage = 2;
-        soundFiles.bang.play();
+        bang.play();
         endTime = hour() * 3600 + minute() * 60 + second();
       } else if (blockCount === rows * columns - numMine) {
       } else if (theBlock.getNumber() === 0) {
         triggerZero(i, j);
-        soundFiles.wow.play();
+        wow.play();
       } else {
         blockCount++;
-        soundFiles.ding.play();
+        ding.play();
       }
       // println(blockCount);
       theBlock.setState(Block.REVEALEDSTATE);
@@ -617,5 +622,5 @@ function mouseReleased() {
    */
   function updateSoundVolume(){
     const volume = volumeSlider.value / 100;
-    for(const sound of soundFiles.values()) {sound.setVolume(volume);}
+    for(const sound of soundFiles) {sound.setVolume(volume);}
   }
