@@ -23,7 +23,7 @@ let volumeSlider;
 
 
 function setup() {
-  const gameCanvas = createCanvas(800, 600);
+  gameCanvas = createCanvas(800, 600);
   gameCanvas.parent("main-canvas");
   // canvasDiv = document.getElementById("canvas-container");
   // if(canvasDiv) canvasDiv.appendChild(gameCanvas);
@@ -638,5 +638,5 @@ function mouseReleased() {
    */
   function updateSoundVolume(){
     const volume = volumeSlider.value / 100;
-    for(const sound of soundFiles.values()) {sound.setVolume(volume);}
+    for(let [key, sound] of soundFiles.entries()) {sound.setVolume(volume);}
   }
