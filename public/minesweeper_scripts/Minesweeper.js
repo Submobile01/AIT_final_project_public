@@ -107,15 +107,17 @@ function mousePressed() {
     const y = Math.floor(mouseY / sideL);
     const x = Math.floor(mouseX / sideL);
     const theBlock = blocks[y][x];
+    if(theBlock != undefined){
     //console.log(theBlock.colorCode);
-    if (mouseButton === LEFT) {
-      buttonCount++;
-      lightBlock(y, x, 3);
-    } else if (mouseButton === RIGHT) {
-      buttonCount++;
-    }
-    if ( theBlock.getState() === Block.REVEALEDSTATE) {
-      lightAround(y, x, Block.LIGHTEDSTATE);
+      if (mouseButton === LEFT) {
+        buttonCount++;
+        lightBlock(y, x, 3);
+      } else if (mouseButton === RIGHT) {
+        buttonCount++;
+      }
+      if ( theBlock.getState() === Block.REVEALEDSTATE) {
+        lightAround(y, x, Block.LIGHTEDSTATE);
+      }
     }
   }
 }
