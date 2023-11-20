@@ -126,6 +126,7 @@ app.post('/', async (req,res) => {
   }catch(err){
     console.error(err)
   }
+  let bestTime;
   const bestTimeStat = getBestTime(gameStatList)
   if(bestTimeStat === null){
     bestTime = 1e6
