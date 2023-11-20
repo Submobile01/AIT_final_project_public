@@ -9,16 +9,16 @@
 {{#if gameStatsList}}
     <table class="review-table">
         <tr>
-            <th>Difficulty (Mine Density)</th>
+            <th>Mine Density</th>
             <th>BoardSize</th>
             <th>Clicks</th>
-            <th>Time</th>
+            <th>Time(s)</th>
         </tr>
         {{#each gameStatsList}}
             <tr>
 
                 <td>{{difficulty}}</td>
-                <td>{{boardSize}}</td>
+                <td>{{boardSize.rows x boardSize.columns}}</td>
                 <td>{{clicks}}</td>
                 <td>{{timeCompleted}}</td>
             </tr>
