@@ -26,7 +26,11 @@ if (mongoose.connection.readyState === 1) {
     console.log('Database connection is not established');
   }
 
-
+  app.use(session({
+    secret: 'your-secret-key', // Change this to a secret key
+    resave: false,
+    saveUninitialized: true,
+}));
 
 app.use(express.static(path.join(__dirname, 'public')));
 
@@ -37,11 +41,7 @@ app.use(cors())
 
 app.use(bodyParser.json({  extended:false }));
 
-app.use(session({
-    secret: 'your-secret-key', // Change this to a secret key
-    resave: false,
-    saveUninitialized: true,
-}));
+
 
 
 
