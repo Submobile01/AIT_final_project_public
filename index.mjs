@@ -65,6 +65,7 @@ app.set('view engine', 'hbs');
 function logReq (req, res, next) {
   let message = "";
   message+= `Method: ${req.method}\n`;
+  message+= `Session ID: ${req.sessionID}\n`;
   message+= `Path: ${req.path}\n`;
   message+= `Query: ${JSON.stringify(req.query)}\n`;
   message+= `Body: ${JSON.stringify(req.body)}\n`;
