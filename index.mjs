@@ -77,7 +77,7 @@ function logReq (req, res, next) {
 app.get('/', (req, res) => {
     res.setHeader('Cache-Control', 's-max-age=1, stale-while-revalidate');
     //res.send("Hello")
-    contentType = req.headers['content-type'];
+    contentType = req.headers['Content-Type'];
     if(contentType === 'application/json'){
 
     }else{
@@ -100,13 +100,13 @@ function getBestTime(list){
 
 }
 
-app.post('/', (req,res) => {
-  //res.setHeader('Cache-Control', 's-max-age=1, stale-while-revalidate');
-  const body = req.body
+// app.post('/', (req,res) => {
+//   //res.setHeader('Cache-Control', 's-max-age=1, stale-while-revalidate');
+//   const body = req.body
 
 
-  res.json({message: data+"message"});
-})
+//   res.json({message: data+"message"});
+// })
 
 app.post('/', async (req,res) => {
   //const sId = req.sessionID;
