@@ -111,15 +111,21 @@ function getBestTime(list){
 app.post('/', async (req,res) => {
   //const sId = req.sessionID;
   const data = await JSON.parse(req.body)
+  console.log(data)
   const gameStat = new GameStat(data)
-  await gameStat.save()
-  const gameStatList = await GameStat.find()
+  try{
+    await gameStat.save()
+    const gameStatList = await GameStat.find()
+  }catch(err){
+    console.error(err)
+  }
   const bestTimeStat = getBestTime(gameStatList)
   if(bestTimeStat === null){
     bestTime = 1e6
   }else{
     bestTime = bestTimeStat.timeCompleted
   }
+  console.log(bestTime)
   res.json({ bestTime});
 })
 
