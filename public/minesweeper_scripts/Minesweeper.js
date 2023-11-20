@@ -128,6 +128,7 @@ function mousePressed() {
     if (gameStage === 1) {
       const y = Math.floor(mouseY / sideL);
       const x = Math.floor(mouseX / sideL);
+      if(0 <= y && 0 <= x && y < rows && x < columns) return;
       let theBlock = blocks[y][x];
       if (mouseButton === LEFT) {
         buttonCount--;
