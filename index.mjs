@@ -5,6 +5,7 @@ import session from 'express-session'
 import { fileURLToPath } from 'url';
 import bodyParser from 'body-parser';
 import cors from 'cors';
+import cookieParser from 'cookie-parser'
 
 
 const app = express();
