@@ -27,6 +27,7 @@ let volumeSlider;
 
 
 
+
 async function setup() {
   gameCanvas = createCanvas(800, 600);
   gameCanvas.parent("main-canvas");
@@ -615,6 +616,8 @@ function mousePressed() {
     let thisTime = endTime-startTime
     console.log("fetch starts")
     console.log(JSON.stringify({thisTime}))
+    let boardSize = {rows, columns}
+    let densMine = densMine
 
     const bestTimeRes = await fetch('/', {
       method: 'POST', // or 'GET' depending on your server configuration
@@ -625,17 +628,13 @@ function mousePressed() {
         // 'Access-Control-Allow-Methods': 'GET,POST,PUT,DELETE',
         // 'Access-Control-Allow-Headers': 'Content-Type'
       },
-      body: JSON.stringify({thisTime}),
+      body: JSON.stringify({difficulty:densMine,boardSize,clicks:clickCount,timeCompleted: thisTime}),
     })
-    if (bestTimeRes.ok) {
-      //const data = await bestTimeRes.json();
-      // Handle the JSON data here
+    
       
-      const bestTimeData = await bestTimeRes.json()
-      console.log(bestTimeData);
-    } else {
-      console.error('Request failed:', bestTimeRes.status, bestTimeRes.statusText);
-    }
+    const bestTimeData = await bestTimeRes.json()
+    console.log(bestTimeData);
+    
     console.log("fetch done");
   }
   

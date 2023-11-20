@@ -17,6 +17,7 @@ import "./db.mjs";
 import mongoose from 'mongoose';
 
 const User = mongoose.model('User');
+const GameStat = mongoose.model('GameStat');
 console.log(process.env.DSN);
 
 if (mongoose.connection.readyState === 1) {
@@ -76,14 +77,50 @@ function logReq (req, res, next) {
 app.get('/', (req, res) => {
     res.setHeader('Cache-Control', 's-max-age=1, stale-while-revalidate');
     //res.send("Hello")
-    res.render('minesweeper.hbs', {});
+    contentType = req.headers['content-type'];
+    if(contentType === 'application/json'){
+
+    }else{
+      res.render('minesweeper.hbs', {});
+    }
+    
 })
+
+function getBestTime(list){
+  if(list.length == 0){
+    return null
+  }
+  list.sort((a,b) => {
+    if(a.timeCompleted == b.timeCompleted){
+      return a.id-b.id
+    }
+    return a.timeCompleted-b.timeCompleted
+  })
+  return list[0];
+
+}
 
 app.post('/', (req,res) => {
   //res.setHeader('Cache-Control', 's-max-age=1, stale-while-revalidate');
   const body = req.body
-  const data = body.thisTime;
+
+
   res.json({message: data+"message"});
+})
+
+app.post('/', async (req,res) => {
+  //const sId = req.sessionID;
+  const data = await JSON.parse(req.body)
+  const gameStat = new GameStat(data)
+  await gameStat.save()
+  const gameStatList = await GameStat.find()
+  const bestTimeStat = getBestTime(gameStatList)
+  if(bestTimeStat === null){
+    bestTime = 1e6
+  }else{
+    bestTime = bestTimeStat.timeCompleted
+  }
+  res.json({ bestTime});
 })
 
 let userList = [];
@@ -97,12 +134,7 @@ app.get('/leaderboard', async (req, res) => {
     
 })
 
-app.post('/', async (req,res) => {
-    //const sId = req.sessionID;
-    const data = await JSON.parse(req.body)
 
-    res.json({ message: data.thisTime + 'Data received successfully!' });
-})
 
 
 
