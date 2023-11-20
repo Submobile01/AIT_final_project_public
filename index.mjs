@@ -78,7 +78,7 @@ app.get('/', (req, res) => {
     res.setHeader('Cache-Control', 's-max-age=1, stale-while-revalidate');
     //res.send("Hello")
     const contentType = req.headers['Content-Type'];
-    if(contentType == undefined || contentType === 'application/json'){
+    if(contentType != undefined && contentType === 'application/json'){
 
     }else{
       res.render('minesweeper.hbs', {});
