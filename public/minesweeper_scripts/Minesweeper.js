@@ -106,8 +106,9 @@ function mousePressed() {
   if (gameStage === 1) {
     const y = Math.floor(mouseY / sideL);
     const x = Math.floor(mouseX / sideL);
-    const theBlock = blocks[y][x];
-    if(theBlock != undefined){
+    if(0 <= y && 0 <= x && y < rows && x < columns){
+      const theBlock = blocks[y][x];
+    
     //console.log(theBlock.colorCode);
       if (mouseButton === LEFT) {
         buttonCount++;
