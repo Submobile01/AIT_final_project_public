@@ -35,7 +35,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(logReq);
 app.use(cors())
 
-app.use(bodyParser.json({ limit: '10mb', extended:false }));
+app.use(bodyParser.json({  extended:false }));
 
 app.use(session({
     secret: 'your-secret-key', // Change this to a secret key
@@ -118,9 +118,10 @@ app.post('/', async (req,res) => {
   }
   console.log(data)
   const gameStat = new GameStat(data)
+  let gameStatList
   try{
     await gameStat.save()
-    const gameStatList = await GameStat.find()
+    gameStatList = await GameStat.find()
   }catch(err){
     console.error(err)
   }

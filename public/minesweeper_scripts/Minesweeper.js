@@ -1,5 +1,6 @@
 let rows;
 let columns;
+let boardSize;
 let sideL;
 let blocks;
 let skip = false;
@@ -35,6 +36,7 @@ async function setup() {
   // if(canvasDiv) canvasDiv.appendChild(gameCanvas);
   rows = 15;
   columns = 20;
+  boardSize = {rows,columns};
   remainingBlocks = document.getElementById("remaining-blocks");
   updateRemainingBlocks();
 
@@ -614,7 +616,6 @@ function mousePressed() {
 
   async function fetchBestTime(){
     let thisTime = endTime-startTime
-    let boardSize = {rows, columns}
     console.log("fetch starts")
     console.log(JSON.stringify({difficulty:densMine,boardSize,clicks:clickCount,timeCompleted: thisTime}))
     
