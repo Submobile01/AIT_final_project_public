@@ -625,7 +625,7 @@ function mousePressed() {
       body: JSON.stringify({thisTime}),
     })
     if (bestTimeRes.ok) {
-      const data = await response.json();
+      const data = await bestTimeRes.json();
       // Handle the JSON data here
       
       const bestTimeData = await bestTimeRes.json()
