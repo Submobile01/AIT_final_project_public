@@ -3,6 +3,8 @@ import express from 'express'
 import path from 'path'
 import session from 'express-session'
 import { fileURLToPath } from 'url';
+import bodyParser from 'body-parser'
+import cors from 'cors'
 
 
 const app = express();
@@ -25,35 +27,60 @@ if (mongoose.connection.readyState === 1) {
 
 app.use(express.static(path.join(__dirname, 'public')));
 
+app.use(express.urlencoded({ extended: false }));
+app.use(logReq);
+app.use(cors())
+
+app.use(bodyParser.json({ limit: '10mb', extended:false }));
+
 app.use(session({
     secret: 'your-secret-key', // Change this to a secret key
     resave: false,
     saveUninitialized: true,
 }));
 
+
+
+app.use((err, req, res, next) => {
+  if(err){
+    console.error(err);
+    res.status(500).send('Internal Server Error');
+  }else{
+    next();
+
+  }
+});
+
 // configure templating to hbs
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
 
-const logReq = (req, res, next) => {
-    let message = "";
-    message+= `Method: ${req.method}\n`;
-    message+= `Path: ${req.path}\n`;
-    message+= `Query: ${JSON.stringify(req.query)}\n`;
-    message+= `Body: ${JSON.stringify(req.body)}`;
-    console.log(message);
-    next();
-  };
+function logReq (req, res, next) {
+  let message = "";
+  message+= `Method: ${req.method}\n`;
+  message+= `Path: ${req.path}\n`;
+  message+= `Query: ${JSON.stringify(req.query)}\n`;
+  message+= `Body: ${JSON.stringify(req.body)}\n`;
+  message+= `URL: ${req.url}`;
+  console.log(message);
+  next();
+};
 
 // body parser (req.body)
-app.use(express.urlencoded({ extended: false }));
-app.use(logReq);
+
 
 
 app.get('/', (req, res) => {
     res.setHeader('Cache-Control', 's-max-age=1, stale-while-revalidate');
     //res.send("Hello")
     res.render('minesweeper.hbs', {});
+})
+
+app.post('/', (req,res) => {
+  //res.setHeader('Cache-Control', 's-max-age=1, stale-while-revalidate');
+  const body = req.body
+  const data = body.thisTime;
+  res.json({message: data+"message"});
 })
 
 let userList = [];
@@ -70,7 +97,7 @@ app.get('/leaderboard', async (req, res) => {
 app.post('/', async (req,res) => {
     //const sId = req.sessionID;
     const data = await JSON.parse(req.body)
-    
+
     res.json({ message: data.thisTime + 'Data received successfully!' });
 })
 

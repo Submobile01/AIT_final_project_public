@@ -27,7 +27,7 @@ let volumeSlider;
 
 
 
-function setup() {
+async function setup() {
   gameCanvas = createCanvas(800, 600);
   gameCanvas.parent("main-canvas");
   // canvasDiv = document.getElementById("canvas-container");
@@ -116,7 +116,7 @@ function mousePressed() {
     }
   }
 }
-function mouseReleased() {
+ async function mouseReleased() {
     // when playing
     console.log(mouseButton);
     if (gameStage === 1) {
@@ -168,6 +168,8 @@ function mouseReleased() {
       if (blockCount === rows * columns - numMine) {
         yes.play();
         gameStage = 3;
+        endTime = hour() * 3600 + minute() * 60 + second();
+        await fetchBestTime();
         for (let i = 0; i < 8; i++) {
           let ranSign = 1;
           if (random(2) > 1) {ranSign = -1;}
@@ -179,7 +181,7 @@ function mouseReleased() {
           const bl = 100 + floor(random(90));
           fireworks.push(new Firework(rs, xs, ys, re, gr, bl));
         }
-        endTime = hour() * 3600 + minute() * 60 + second();
+        
       }
     }
   
@@ -511,6 +513,7 @@ function mouseReleased() {
    * draws the restart window and button on canvas
    */
   function drawRestart() {
+
     //the rectangle
     fill(130, 130, 210, 130);
     noStroke();
@@ -524,7 +527,8 @@ function mouseReleased() {
     fill(0);
     text("Time: " + "--", width * 0.35, height * 0.35);
     text("Best Time: " + bestTimeString, width * 0.35, height * 0.42);
-  
+
+    
     //restart Button
     fill(color(60));
     noStroke();
@@ -581,6 +585,11 @@ function mouseReleased() {
     let bestTimeString;
     if(!bestTime) {bestTime = 0;}
     const thisTime = endTime - startTime;
+
+
+    
+
+
     if (thisTime < bestTime || bestTime === 0) {
       bestTime = thisTime;
     }
@@ -600,6 +609,31 @@ function mouseReleased() {
     rect(width * 0.45, height * 0.56, width / 10, height * 0.1);
     fill(0);
     text("Restart", width * 0.46, height * 0.62);
+  }
+
+  async function fetchBestTime(){
+    let thisTime = endTime-startTime
+    console.log("fetch starts")
+    console.log(JSON.stringify({thisTime}))
+
+    const bestTimeRes = await fetch('/', {
+      method: 'POST', // or 'GET' depending on your server configuration
+      mode: 'cors',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({thisTime}),
+    })
+    if (bestTimeRes.ok) {
+      const data = await response.json();
+      // Handle the JSON data here
+      
+      const bestTimeData = await bestTimeRes.json()
+      console.log(bestTimeData);
+    } else {
+      console.error('Request failed:', bestTimeRes.status, bestTimeRes.statusText);
+    }
+    console.log("fetch done");
   }
   
 
