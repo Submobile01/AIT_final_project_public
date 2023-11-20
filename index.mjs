@@ -110,14 +110,17 @@ function getBestTime(list){
 
 app.post('/', async (req,res) => {
   //const sId = req.sessionID;
-  const data = req.body
+  let data = req.body
+  const username = req.session.username
+  data = {...data, username: username ? username : req.sessionID.substring(0,6)}
+
   let bestTime;
   const gameStat = new GameStat(data)
   let gameStatList
-  try{
+  try {
     await gameStat.save()
     gameStatList = await GameStat.find()
-  }catch(err){
+  } catch(err){
     console.error(err)
     console.error("saving failed")
   }

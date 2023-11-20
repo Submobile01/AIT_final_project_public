@@ -9,6 +9,7 @@
 {{#if gameStatsList}}
     <table class="review-table">
         <tr>
+            <th>User</th>
             <th>Mine Density</th>
             <th>BoardSize</th>
             <th>Clicks</th>
@@ -16,7 +17,7 @@
         </tr>
         {{#each gameStatsList}}
             <tr>
-
+                <td>{{username}}</td>
                 <td>{{difficulty}}</td>
                 <td>{{boardSize.rows}} x {{boardSize.columns}}</td>
                 <td>{{clicks}}</td>

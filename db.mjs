@@ -12,7 +12,7 @@ const UserSchema = new mongoose.Schema(
 });
 
 const GameStatsSchema = new mongoose.Schema(
-    {
+    {   username: String,
         difficulty: String,
         boardSize: Object,
         clicks: Number,
