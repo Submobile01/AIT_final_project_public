@@ -25,14 +25,14 @@ if (mongoose.connection.readyState === 1) {
     console.log('Database connection is not established');
   }
 
-app.use(cors())
+
 
 app.use(express.static(path.join(__dirname, 'public')));
 
 
 app.use(express.urlencoded({ extended: false }));
 app.use(logReq);
-
+app.use(cors())
 
 app.use(bodyParser.json({ limit: '10mb', extended:false }));
 
@@ -44,15 +44,15 @@ app.use(session({
 
 
 
-// app.use((err, req, res, next) => {
-//   if(err){
-//     console.error(err);
-//     res.status(500).send('Internal Server Error');
-//   }else{
-//     next();
+app.use((err, req, res, next) => {
+  if(err){
+    console.error(err);
+    res.status(500).send('Internal Server Error');
+  }else{
+    next();
 
-//   }
-// });
+  }
+});
 
 // configure templating to hbs
 app.set('views', path.join(__dirname, 'views'));
