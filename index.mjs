@@ -110,12 +110,13 @@ function getBestTime(list){
 
 app.post('/', async (req,res) => {
   //const sId = req.sessionID;
-  try{
-    const data = req.body
-  }catch(err){
-    console.error(err)
-    console.error('error parsing req body')
-  }
+  const data = req.body
+  // try{
+    
+  // }catch(err){
+  //   console.error(err)
+  //   console.error('error parsing req body')
+  // }
   console.log(data)
   const gameStat = new GameStat(data)
   let gameStatList
