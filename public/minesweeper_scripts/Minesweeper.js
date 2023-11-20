@@ -615,9 +615,8 @@ function mousePressed() {
   async function fetchBestTime(){
     let thisTime = endTime-startTime
     console.log("fetch starts")
-    console.log(JSON.stringify({thisTime}))
+    console.log(JSON.stringify({difficulty:densMine,boardSize,clicks:clickCount,timeCompleted: thisTime}))
     let boardSize = {rows, columns}
-    let densMine = densMine
 
     const bestTimeRes = await fetch('/', {
       method: 'POST', // or 'GET' depending on your server configuration
