@@ -111,13 +111,7 @@ function getBestTime(list){
 app.post('/', async (req,res) => {
   //const sId = req.sessionID;
   const data = req.body
-  // try{
-    
-  // }catch(err){
-  //   console.error(err)
-  //   console.error('error parsing req body')
-  // }
-  console.log(data)
+  let bestTime;
   const gameStat = new GameStat(data)
   let gameStatList
   try{
@@ -125,8 +119,9 @@ app.post('/', async (req,res) => {
     gameStatList = await GameStat.find()
   }catch(err){
     console.error(err)
+    console.error("saving failed")
   }
-  let bestTime;
+  
   const bestTimeStat = getBestTime(gameStatList)
   if(bestTimeStat === null){
     bestTime = 1e6
@@ -141,10 +136,9 @@ let userList = [];
 
 app.get('/leaderboard', async (req, res) => {
     res.setHeader('Cache-Control', 's-max-age=1, stale-while-revalidate');
-    console.log(User)
-    userList = await User.find();
-    console.log(userList);
-    res.render('file_test.hbs', {userList});
+    const gameStatsList = await GameStat.find();
+    console.log(gameStatsList);
+    res.render('file_test.hbs', {gameStatsList});
     
 })
 

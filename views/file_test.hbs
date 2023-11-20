@@ -6,17 +6,21 @@
     <button type="submit"> Submit </button>
 </form>
 
-{{#if userList}}
+{{#if gameStatsList}}
     <table class="review-table">
         <tr>
-            <th>Username</th>
-            <th>Password</th>
+            <th>Difficulty (Mine Density)</th>
+            <th>BoardSize</th>
+            <th>Clicks</th>
+            <th>Time</th>
         </tr>
-        {{#each userList}}
+        {{#each gameStatsList}}
             <tr>
 
-                <td>{{username}}</td>
-                <td>{{password}}</td>
+                <td>{{difficulty}}</td>
+                <td>{{boardSize}}</td>
+                <td>{{clicks}}</td>
+                <td>{{timeCompleted}}</td>
             </tr>
         {{/each}}
     </table>
