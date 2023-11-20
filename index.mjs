@@ -111,7 +111,7 @@ function getBestTime(list){
 app.post('/', async (req,res) => {
   //const sId = req.sessionID;
   try{
-    const data = await JSON.parse(req.body)
+    const data = req.body
   }catch(err){
     console.error(err)
     console.error('error parsing req body')
