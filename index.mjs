@@ -40,7 +40,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(express.urlencoded({ extended: false }));
 app.use(logReq);
-app.use(cors())
+app.use(cors({credentials: true}))
 
 app.use(bodyParser.json({  extended:false }));
 

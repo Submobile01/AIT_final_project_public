@@ -627,6 +627,7 @@ function mousePressed() {
     const bestTimeRes = await fetch('/', {
       method: 'POST', // or 'GET' depending on your server configuration
       mode: 'cors',
+      credentials: "include",
       headers: {
         'Content-Type': 'application/json',
         // 'Access-Control-Allow-Origin': '*',
