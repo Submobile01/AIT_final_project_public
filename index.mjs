@@ -232,6 +232,10 @@ app.post('/leaderboard', async (req, res) => {
     res.redirect('/leaderboard');
 })
 
+app.get('/tutorial', (req,res) => {
+    res.render('tutorials.hbs', {})
+})
+
 export default app;
 
 // app.listen(process.env.PORT || 3000);
