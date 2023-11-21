@@ -33,6 +33,11 @@ app.use(session({
     secret: 'your-secret-key', // Change this to a secret key
     resave: false,
     saveUninitialized: true,
+    cookie: {
+      httpOnly: true,
+      sameSite: 'none', // can be 'strict', 'lax', or 'none'
+      maxAge: 1000 * 60 * 60 * 24 // 24 hours, for example
+  }
 }));
 
 app.use(express.static(path.join(__dirname, 'public')));
@@ -79,7 +84,7 @@ function logReq (req, res, next) {
 
 
 app.get('/', (req, res) => {
-    // res.setHeader('Cache-Control', 's-max-age=1, stale-while-revalidate');
+    res.setHeader('Cache-Control', 's-max-age=1, stale-while-revalidate');
     //res.send("Hello")
     const contentType = req.headers['Content-Type'];
     if(contentType != undefined && contentType === 'application/json'){
@@ -155,7 +160,8 @@ app.get('/leaderboard', async (req, res) => {
 
 app.post('/leaderboard', async (req, res) => {
     const { username, password } = req.body;
-
+    //frontend: if username exist, get rid of the form
+    //save username to session
   // Create a new review document in your MongoDB using Mongoose
     const user = new User({
         username,
