@@ -208,7 +208,7 @@ app.get('/leaderboard', async (req, res) => {
     res.setHeader('Cache-Control', 's-max-age=1, stale-while-revalidate');
     const gameStatsList = await GameStat.find();
     // console.log(gameStatsList);
-    let filteredList = filterStatsList(gameStatsList)
+    let filteredList = filterStatsList(req, gameStatsList)
     res.render('file_test.hbs', {'gameStatsList' : filterStatsList});
     
 })
