@@ -110,13 +110,70 @@ function getBestTime(list){
 
 }
 
-// app.post('/', (req,res) => {
-//   //res.setHeader('Cache-Control', 's-max-age=1, stale-while-revalidate');
-//   const body = req.body
+function sortTasks(req, l) {
+  if (req.query['sort-by'] && req.query['sort-order']) {
+    const newL = [...l];
+    const crit = req.query['sort-by'];
+    const ord = req.query['sort-order'];
+    newL.sort((a, b)=>{
+      if (ord === 'asc') {
+        switch (crit) {
+          case 'due-date': {
+            const a1 = a['due-date'];
+            const b1 = b['due-date'];
+            if (a1 === b1) { return 0; }
+            return a1 > b1 ? 1 : -1;
+          }
+          case 'priority': {
+            return a[crit] - b[crit];
+          }
+          default: {
+            return 0;
+          }
+        }
+      } else if (ord === 'desc') {
+        switch (crit) {
+          case 'due-date': {
+            const a1 = new Date(a[crit]);
+            const b1 = new Date(b[crit]);
+            if (a1 === b1) { return 0; }
+            return a1 < b1 ? 1 : -1;
+          }
+          case 'priority': {
+            return b[crit] - a[crit];
+          }
+          default: {
+            return 0;
+          }
+        }
+      } else {
+        return [];
+      }
+    });
+    return newL;
+  } else {
+    return l;
+  }
+}
+
+function filterStatsList(req, l){
+  if (req.query["userQ"] || req.query["boardSizeQ"]) {
+    //console.log("filtering")
+    let userQ = req.query['userQ'];
+    const username = req.session.username
+    if(userQ === 'current') userQ = username ? username : req.session.id.substring(6)
+
+    const boardSizeQ = req.query['boardSizeQ'];
+    console.log(userQ,boardSizeQ);
+    return l.filter((stat)=>{
+      return (userQ === 'any' || stat.username === userQ) &&
+      (boardSizeQ === 'any' || stat.boardSize === boardSizeQ);
+    });
+  }
+  else {return l;}
+}
 
 
-//   res.json({message: data+"message"});
-// })
 
 app.post('/', async (req,res) => {
   //const sId = req.sessionID;
