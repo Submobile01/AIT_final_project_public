@@ -166,7 +166,7 @@ function filterStatsList(req, l){
     const boardSizeQ = req.query['boardSizeQ'];
     console.log(userQ,boardSizeQ);
     return l.filter((stat)=>{
-      return (userQ === 'any' || stat.username === userQ) &&
+      return (userQ === '' || stat.username === userQ) &&
       (boardSizeQ === 'any' || stat.boardSize === boardSizeQ);
     });
   }
@@ -207,8 +207,9 @@ let userList = [];
 app.get('/leaderboard', async (req, res) => {
     res.setHeader('Cache-Control', 's-max-age=1, stale-while-revalidate');
     const gameStatsList = await GameStat.find();
-    console.log(gameStatsList);
-    res.render('file_test.hbs', {gameStatsList});
+    // console.log(gameStatsList);
+    let filteredList = filterStatsList(gameStatsList)
+    res.render('file_test.hbs', {'gameStatsList' : filterStatsList});
     
 })
 
