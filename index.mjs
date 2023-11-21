@@ -70,7 +70,8 @@ app.set('view engine', 'hbs');
 function logReq (req, res, next) {
   let message = "";
   message+= `Method: ${req.method}\n`;
-  message+= `Session ID: ${req.sessionID}\n`;
+  message+= `Session ID: ${req.session.id}\n`;
+  message+= `Session username: ${req.session.username}\n`;
   message+= `Path: ${req.path}\n`;
   message+= `Query: ${JSON.stringify(req.query)}\n`;
   message+= `Body: ${JSON.stringify(req.body)}\n`;
@@ -121,7 +122,7 @@ app.post('/', async (req,res) => {
   //const sId = req.sessionID;
   let data = req.body
   const username = req.session.username
-  data = {...data, username: username ? username : req.sessionID.substring(0,6)}
+  data = {...data, username: username ? username : req.session.id.substring(0,6)}
 
   let bestTime;
   const gameStat = new GameStat(data)
