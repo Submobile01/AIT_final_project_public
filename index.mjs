@@ -36,7 +36,7 @@ app.use(session({
     cookie: {
       //httpOnly: true,
       sameSite: 'strict', // can be 'strict', 'lax', or 'none'
-      maxAge: 1000 * 60 * 60 * 24 // 24 hours, for example
+      // maxAge: 1000 * 60 * 60 * 24 // 24 hours, for example
   }
 }));
 
