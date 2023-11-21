@@ -8,7 +8,6 @@ mongoose.connect(process.env.DSN);
 const UserSchema = new mongoose.Schema(
     {username: String,
     password: String,
-    gameList: Array,
 });
 
 const GameStatsSchema = new mongoose.Schema(

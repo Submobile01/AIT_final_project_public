@@ -166,8 +166,8 @@ app.post('/leaderboard', async (req, res) => {
     const user = new User({
         username,
         password,
-        gameList: []
     });
+    req.session.username = username
     await user.save();
     res.redirect('/leaderboard');
 })
