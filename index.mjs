@@ -43,7 +43,7 @@ app.use(session({
 app.use(express.static(path.join(__dirname, 'public')));
 
 
-app.use(express.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({ extended: false }));
 app.use(logReq);
 app.use(cors({credentials: true,origin:true}))
 
@@ -209,7 +209,7 @@ app.get('/leaderboard', async (req, res) => {
     const gameStatsList = await GameStat.find();
     // console.log(gameStatsList);
     let filteredList = filterStatsList(req, gameStatsList)
-    res.render('file_test.hbs', {'gameStatsList' : filterStatsList});
+    res.render('file_test.hbs', {'gameStatsList' : filteredList});
     
 })
 
