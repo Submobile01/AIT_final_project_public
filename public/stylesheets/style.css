@@ -111,3 +111,54 @@ p {
     /* Additional styling for the game description */
 }
 
+form {
+    background-color: #004d00;
+    padding: 20px;
+    border-radius: 10px;
+    color: white;
+}
+
+input[type=text], select, button {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+button {
+    background-color: #008000;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #006600;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th, td {
+    text-align: left;
+    padding: 8px;
+}
+
+tr:nth-child(even) {
+    background-color: #e6ffe6;
+}
+
+tr:nth-child(odd) {
+    background-color: #ccffcc;
+}
+
+th {
+    background-color: #004d00;
+    color: white;
+}
+
