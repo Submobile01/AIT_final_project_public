@@ -168,8 +168,8 @@ app.post('/leaderboard', async (req, res) => {
         password,
         gameList: []
     });
-  await user.save();
-  res.redirect('/leaderboard');
+    await user.save();
+    res.redirect('/leaderboard');
 })
 
 export default app;
