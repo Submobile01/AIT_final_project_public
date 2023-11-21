@@ -168,7 +168,7 @@ function filterStatsList(req, l){
     console.log(userQ,boardSizeQ);
     return l.filter((stat)=>{
       return (userQ === '' || stat.username === userQ) &&
-      (boardSizeQ === 'any' || stat.boardSize.rows + ' x ' + stat.boardSize.columns === boardSizeQ);
+      (boardSizeQ === 'any' || stat.boardSize.rows + 'x' + stat.boardSize.columns === boardSizeQ);
     });
   }
   else {return l;}
