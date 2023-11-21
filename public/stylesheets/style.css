@@ -107,3 +107,7 @@ p {
     margin-left: 20px;
     /* Additional styling for the game description */
 }
+
+disappear {
+    display: none
+}

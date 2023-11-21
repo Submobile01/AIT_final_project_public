@@ -1,13 +1,13 @@
-<form method="POST" action="/leaderboard">
+<form method="POST" action="/leaderboard" id="userForm">
     <label for="username">Username:</label>
     <input type="text" id="username" name="username" placeholder="username" ><br>
     <label for="password">Password (Optional):</label>
     <input type="text" id="password" name="password" placeholder="password" ><br>
-    <button type="submit"> Submit </button>
+    <button type="submit" id="userSubmit"> Submit </button>
 </form>
 
 {{#if gameStatsList}}
-    <table class="review-table">
+    <table class="game-stats-table">
         <tr>
             <th>User</th>
             <th>Mine Density</th>
@@ -26,3 +26,5 @@
         {{/each}}
     </table>
 {{/if}}
+
+<script src=""></script>
