@@ -27,10 +27,10 @@ if (mongoose.connection.readyState === 1) {
     console.log('Database connection is not established');
   }
 
-app.use(cookieParser(process.env.KEY));
+app.use(cookieParser(process.env.Key));
 
 app.use(session({
-    secret: process.env.KEY, // Change this to a secret key
+    secret: process.env.Key, // Change this to a secret key
     resave: false,
     saveUninitialized: true,
     cookie: {
