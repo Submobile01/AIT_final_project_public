@@ -3,7 +3,7 @@ const userForm = document.querySelector('#userForm')
 const userSubmit = document.querySelector('#userSubmit')
 
 function handleSubmit(event){
-    this.classList.toggle('disappear')
+    userForm.classList.toggle('disappear')
     
 }
 
