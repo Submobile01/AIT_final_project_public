@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 import path from 'path'
-mongoose.connect(path.join(process.env.DSN, process.env.DSNQuery));
+mongoose.connect(process.env.DSN);
 
 //console.log(process.env.Key)
 
