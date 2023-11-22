@@ -6,6 +6,9 @@ import { fileURLToPath } from 'url';
 import bodyParser from 'body-parser';
 import cors from 'cors';
 import cookieParser from 'cookie-parser'
+import connectSession from 'connect-mongodb-session'
+
+
 
 
 const app = express();
@@ -14,8 +17,20 @@ const __dirname = path.dirname(__filename);
 
 
 
+
 import "./db.mjs";
 import mongoose from 'mongoose';
+
+const MongoDBStore = connectSession(session)
+const databaseName = 'minesweeperdb'
+const mongoSessionUri = path.join(path.join(process.env.DSN, databaseName),process.env.DSNQuery)
+console.log(mongoSessionUri)
+
+const store =  new MongoDBStore({
+  uri: mongoSessionUri,
+  collection: 'sessions', // Collection to store sessions
+  // Additional options, if needed
+});
 
 const User = mongoose.model('User');
 const GameStat = mongoose.model('GameStat');
@@ -37,7 +52,8 @@ app.use(session({
       //httpOnly: true,
       sameSite: 'lax', // can be 'strict', 'lax', or 'none'
       // maxAge: 1000 * 60 * 60 * 24 // 24 hours, for example
-  }
+    },
+    store: store
 }));
 
 app.use(express.static(path.join(__dirname, 'public')));
@@ -239,4 +255,5 @@ app.get('/tutorial', (req,res) => {
 export default app;
 
 // app.listen(process.env.PORT || 3000);
+
 
