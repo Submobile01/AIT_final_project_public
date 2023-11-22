@@ -23,8 +23,7 @@ import mongoose from 'mongoose';
 
 const MongoDBStore = connectSession(session)
 const databaseName = 'minesweeperdb'
-const mongoSessionUri = path.join(path.join(process.env.DSN, databaseName),process.env.DSNQuery)
-console.log(mongoSessionUri)
+const mongoSessionUri = process.env.DSN
 
 const store =  new MongoDBStore({
   uri: mongoSessionUri,
