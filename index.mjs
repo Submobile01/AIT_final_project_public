@@ -179,7 +179,7 @@ app.get('/', (req, res) => {
     if(contentType != undefined && contentType === 'application/json'){
       //if get request is a fetch
     }else{
-      res.render('minesweeper.hbs', {});
+      res.render('minesweeper.hbs', {subtitle: 'Main Game'});
     } 
 })
 
@@ -219,7 +219,7 @@ app.get('/leaderboard', async (req, res) => {
     // console.log(gameStatsList);
     let filteredList = filterStatsList(req, gameStatsList)
     let sortedFilteredList = sortStats(req, filteredList)
-    res.render('leaderboard.hbs', {'gameStatsList' : sortedFilteredList, css: 'leaderboard.css'});
+    res.render('leaderboard.hbs', {'gameStatsList' : sortedFilteredList, css: 'leaderboard.css',subtitle: 'Game Statistics'});
     
 })
 
@@ -240,7 +240,7 @@ app.post('/leaderboard', async (req, res) => {
 // handle tutorial requests
 
 app.get('/tutorial', (req,res) => {
-    res.render('tutorials.hbs', {})
+    res.render('tutorials.hbs', {subtitle: 'Tutorial'})
 })
 
 export default app;

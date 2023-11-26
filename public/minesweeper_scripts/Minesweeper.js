@@ -177,7 +177,7 @@ function mousePressed() {
         gameStage = 3;
         endTime = hour() * 3600 + minute() * 60 + second();
         await fetchBestTime();
-        for (let i = 0; i < 8; i++) {
+        for (let i = 0; i < 8; i++) {//generate fireworks
           let ranSign = 1;
           if (random(2) > 1) {ranSign = -1;}
           const xs = random(10) * ranSign;
@@ -544,6 +544,10 @@ function mousePressed() {
     text("Restart", width * 0.46, height * 0.62);
   }
   
+  /**
+   * restarts the game: reset all counts and stage variables
+   * and regenerate/redraw the blocks
+   */
   function restart() {
     gameStage = 1;
     flagCount = 0;
