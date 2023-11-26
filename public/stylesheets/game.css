@@ -9,7 +9,15 @@
 .slider-group {
     display: flex;
     flex-direction: column;
-    align-items: center;
-    justify-content: center;
+    align-items: center; /* in-direction */
+    justify-content: center;/* off-direction */
+    margin-bottom: 10px; /* Spacing between rows */
+}
+
+.slider-submit {
+    display: flex;
+    flex-direction: row;
+    align-items: center; /* in-direction */
+    justify-content: center;/* off-direction */
     margin-right: 10px; /* Spacing between rows */
 }
