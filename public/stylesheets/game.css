@@ -11,7 +11,7 @@
     flex-direction: column;
     align-items: center; /* in-direction */
     justify-content: center;/* off-direction */
-    margin-bottom: 10px; /* Spacing between rows */
+    margin-bottom: 15px; /* Spacing between rows */
 }
 
 .slider-submit {
@@ -19,5 +19,13 @@
     flex-direction: row;
     align-items: center; /* in-direction */
     justify-content: center;/* off-direction */
-    margin-right: 10px; /* Spacing between rows */
+    margin-right: 15px; /* Spacing between rows */
+}
+
+.content-wrapper {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+
 }
