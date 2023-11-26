@@ -1,0 +1,103 @@
+.container {
+    text-align: center;
+    margin-left:18%;
+    margin-right: 18%;
+    margin-top: 20px;
+}
+
+
+.content-wrapper {
+    display: flex;
+    justify-content: center;
+    text-align: left;
+    align-items: flex-start;
+}
+
+.canvas-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.main-title {
+    font-family: "sacramento", cursive;
+}
+
+.section-title {
+    font-family: "Lobster", cursive;
+    color:#2f9f4b;
+}
+
+.fancy-text {
+    font-family: "sacramento", cursive;
+    color:rgb(46, 92, 148);
+}
+
+em {
+    color:rgba(0, 0, 0, 0.885);
+}
+
+.large{
+    font-size:30px;
+
+}
+
+.disappear {
+    display: none
+}
+
+p {
+    margin-left: 20px;
+    /* Additional styling for the game description */
+}
+
+form {
+    background-color: #ffffff;
+    padding: 20px;
+    margin: auto;
+    margin-bottom: 20px;
+    width: 80%;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+input[type=text], select, button {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+button {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #45a049;
+}
+
+table {
+    width: 80%;
+    margin: auto;
+    border-collapse: collapse;
+}
+
+th, td {
+    text-align: left;
+    padding: 8px;
+    border-bottom: 1px solid #ddd;
+}
+
+th {
+    background-color: #f2f2f2;
+}
+
+@media screen and (max-width: 600px) {
+    form, table {
+        width: 100%;
+    }
+}

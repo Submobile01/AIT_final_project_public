@@ -219,7 +219,7 @@ app.get('/leaderboard', async (req, res) => {
     // console.log(gameStatsList);
     let filteredList = filterStatsList(req, gameStatsList)
     let sortedFilteredList = sortStats(req, filteredList)
-    res.render('leaderboard.hbs', {'gameStatsList' : sortedFilteredList});
+    res.render('leaderboard.hbs', {'gameStatsList' : sortedFilteredList, css: 'leaderboard.css'});
     
 })
 
