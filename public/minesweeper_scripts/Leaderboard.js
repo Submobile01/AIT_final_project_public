@@ -14,7 +14,7 @@ function generateListener(buttonName, sortOrder){
         Object.keys(queryParams).forEach(key => newUrl.searchParams.set(key, queryParams[key]));
 
         // Modify the current URL
-        window.history.pushState({}, '', newUrl);
+        window.location.href = newUrl
     }
     
 }
