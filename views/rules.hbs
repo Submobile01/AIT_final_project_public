@@ -1,0 +1,30 @@
+<div id="instructions" class="container">
+        <h2 class="section-title">How to Play</h2>
+        
+        <ul>
+            <li>Your <strong>goal</strong> is to activate all squares without a mine under.</li>
+            <li>Drag the <strong>slider</strong> to change the density of the mines. Click <strong>Save</strong> to start a new game with the density selected.</li>
+            <li><strong>Definition</strong> surrounding squares: 
+                the squares that are (diagonally) adjacent to the current square;
+                a square usually has eight surrounding squares, if in the middle of board.</li>
+            <li><strong>Definition</strong> flag: 
+                a symbol on a square that a player places to mark that there is a mine under the square.</li>
+            <li><em>Left Click</em>:
+                <ul>
+                    <li>Unactivated square: <strong>Activates</strong> the square.
+                        If there's a mine under, game over; if not, shows the number of mines surrounding it</li>
+                    <li>Revealed square: <strong>Tries</strong> to activate the surrounding squares without flag.
+                        If number of flags surrounding the square equal to the number on the square, then activates surroundings successfully.
+                        If not, it will just light up the surrounding unactivated squares.</li>
+                </ul>
+            </li>
+            <li><em>Right Click</em>:
+                <ul>
+                    <li>Unactivated Square: place/remove a flag.</li>
+                    <li>Activated Square: same as Left Click</li>
+                </ul>
+
+            </li>
+        </ul>
+
+    </div>

@@ -244,7 +244,16 @@ app.get('/tutorial', (req,res) => {
     res.render('tutorials.hbs', {subtitle: 'Tutorial',css: 'tutorials.css'})
 })
 
+app.get('/rules', (req, res) => {
+    res.render('rules.hbs', {subtitle: 'Rules'})
+})
+
+// handle 
+
+
 export default app;
+
+
 
 // app.listen(process.env.PORT || 3000);
 
