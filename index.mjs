@@ -56,51 +56,60 @@ function filterStatsList(req, l){
 }
 
 
-// function sortTasks(req, l) {
-//   if (req.query['sort-by'] && req.query['sort-order']) {
-//     const newL = [...l];
-//     const crit = req.query['sort-by'];
-//     const ord = req.query['sort-order'];
-//     newL.sort((a, b)=>{
-//       if (ord === 'asc') {
-//         switch (crit) {
-//           case 'due-date': {
-//             const a1 = a['due-date'];
-//             const b1 = b['due-date'];
-//             if (a1 === b1) { return 0; }
-//             return a1 > b1 ? 1 : -1;
-//           }
-//           case 'priority': {
-//             return a[crit] - b[crit];
-//           }
-//           default: {
-//             return 0;
-//           }
-//         }
-//       } else if (ord === 'desc') {
-//         switch (crit) {
-//           case 'due-date': {
-//             const a1 = new Date(a[crit]);
-//             const b1 = new Date(b[crit]);
-//             if (a1 === b1) { return 0; }
-//             return a1 < b1 ? 1 : -1;
-//           }
-//           case 'priority': {
-//             return b[crit] - a[crit];
-//           }
-//           default: {
-//             return 0;
-//           }
-//         }
-//       } else {
-//         return [];
-//       }
-//     });
-//     return newL;
-//   } else {
-//     return l;
-//   }
-// }
+function sortStats(req, l) {
+  if (req.query['sort-by'] && req.query['sort-order']) {
+    const newL = [...l];
+    const crit = req.query['sort-by'];
+    const ord = req.query['sort-order'];
+    newL.sort((a, b)=>{
+      if (ord === 'asc') {
+        switch (crit) {
+          case 'time': {
+            const a1 = a['time'];
+            const b1 = b['time'];
+            if (a1 === b1) { return 0; }
+            return a1 > b1 ? 1 : -1;
+          }
+          case 'timeComp': {
+            const a1 = a['timeComp'];
+            const b1 = b['timeComp'];
+            if (a1 === b1) { return 0; }
+            return a1 > b1 ? 1 : -1;
+          }
+          case 'mineDensity': {
+            return a['mineDensity'] - b['mineDensity']
+          }
+          default: {
+            return 0;
+          }
+        }
+      } else if (ord === 'desc') {
+        switch (crit) {
+          case 'time': {
+            const a1 = a['time'];
+            const b1 = b['time'];
+            if (a1 === b1) { return 0; }
+            return a1 < b1 ? 1 : -1;
+          }
+          case 'timeComp': {
+            const a1 = a['timeComp'];
+            const b1 = b['timeComp'];
+            if (a1 === b1) { return 0; }
+            return a1 < b1 ? 1 : -1;
+          }
+          case 'mineDensity': {
+            return b['mineDensity'] - a['mineDensity']
+          }
+        }
+      } else {
+        return [];
+      }
+    });
+    return newL;
+  } else {
+    return l;
+  }
+}
 
 
 /** Utility functions ends */
@@ -219,7 +228,8 @@ app.get('/leaderboard', async (req, res) => {
     const gameStatsList = await GameStat.find();
     // console.log(gameStatsList);
     let filteredList = filterStatsList(req, gameStatsList)
-    res.render('leaderboard.hbs', {'gameStatsList' : filteredList});
+    let sortedFilteredList = sortStats(req, filteredList)
+    res.render('leaderboard.hbs', {'gameStatsList' : sortedFilteredList});
     
 })
 
@@ -236,6 +246,8 @@ app.post('/leaderboard', async (req, res) => {
     await user.save();
     res.redirect('/leaderboard');
 })
+
+// handle tutorial requests
 
 app.get('/tutorial', (req,res) => {
     res.render('tutorials.hbs', {})
