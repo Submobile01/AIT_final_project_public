@@ -42,7 +42,7 @@ function filterStatsList(req, l){
     //console.log("filtering")
     let userQ = req.query['userQ'];
     const username = req.session.username
-    if(userQ === 'current') userQ = username ? username : req.session.id.substring(6)
+    if(userQ === 'mine') userQ = username ? username : req.session.id.substring(6)
 
     const boardSizeQ = req.query['boardSizeQ'];
     
@@ -179,7 +179,8 @@ app.get('/', (req, res) => {
     if(contentType != undefined && contentType === 'application/json'){
       //if get request is a fetch
     }else{
-      res.render('minesweeper.hbs', {subtitle: 'Main Game', css: 'game.css'});
+      const username = req.session.username ? req.session.username : req.session.id.substring(0,6)
+      res.render('minesweeper.hbs', {subtitle: 'Main Game', css: 'game.css', username: username});
     } 
 })
 
