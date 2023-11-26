@@ -4,6 +4,7 @@ const userSubmit = document.querySelector('#userSubmit')
 
 function generateListener(buttonName, sortOrder){
     return function(){
+        console.log(`listener triggered for ${buttonName}, ${sortOrder}`)
         const queryParams = { 'sort-by': buttonName, 'sort-order': sortOrder};
 
         // Create a new URL object based on the current URL
