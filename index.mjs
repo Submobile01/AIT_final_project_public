@@ -225,7 +225,7 @@ app.get('/leaderboard', async (req, res) => {
     const gameStatsList = await GameStat.find();
     // console.log(gameStatsList);
     let filteredList = filterStatsList(req, gameStatsList)
-    res.render('file_test.hbs', {'gameStatsList' : filteredList});
+    res.render('leaderboard.hbs', {'gameStatsList' : filteredList});
     
 })
 
