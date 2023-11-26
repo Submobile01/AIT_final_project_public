@@ -7,19 +7,23 @@
 
         <p class="fancy-text">This is a fun minesweeper game with exciting sound effects and great visuals after winning. Enjoy!</p>
         <p class="fancy-text">See Tutorial and Rules Below!</p> --}}
-        <span id="remaining-blocks"></span>
+        
         
 
         <div class="content-wrapper">
-            <div class="canvas-container" id="main-canvas">                </div>
-
             <div id="densMine-slider-container">
+                
                 <p id="sliderValue">Mine density is <strong>18%</strong> (Default)   </p>
                 <input type="range" id="slider" min="0" max="50" value="18" step="1" >
                 <button id="saveButton">Save and Restart</button>
+                <span id="remaining-blocks"> </span>
                 <p>Sound Effect Volume:</p>
                 <input type="range" id="volume-slider" min="0" max="100" value="15" step="1"> 
             </div>
+            <br>
+            <div class="canvas-container" id="main-canvas">                </div>
+
+            
         </div>
 
         

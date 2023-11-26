@@ -179,7 +179,7 @@ app.get('/', (req, res) => {
     if(contentType != undefined && contentType === 'application/json'){
       //if get request is a fetch
     }else{
-      res.render('minesweeper.hbs', {subtitle: 'Main Game'});
+      res.render('minesweeper.hbs', {subtitle: 'Main Game', css: 'game.css'});
     } 
 })
 
