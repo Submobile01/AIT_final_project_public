@@ -64,20 +64,14 @@ function sortStats(req, l) {
     newL.sort((a, b)=>{
       if (ord === 'asc') {
         switch (crit) {
-          case 'time': {
-            const a1 = a['time'];
-            const b1 = b['time'];
+          case 'timeCompleted': {
+            const a1 = a['timeCompleted'];
+            const b1 = b['timeCompleted'];
             if (a1 === b1) { return 0; }
             return a1 > b1 ? 1 : -1;
           }
-          case 'timeComp': {
-            const a1 = a['timeComp'];
-            const b1 = b['timeComp'];
-            if (a1 === b1) { return 0; }
-            return a1 > b1 ? 1 : -1;
-          }
-          case 'mineDensity': {
-            return a['mineDensity'] - b['mineDensity']
+          case 'difficulty': {
+            return a['difficulty'] - b['difficulty']
           }
           default: {
             return 0;
@@ -85,20 +79,14 @@ function sortStats(req, l) {
         }
       } else if (ord === 'desc') {
         switch (crit) {
-          case 'time': {
-            const a1 = a['time'];
-            const b1 = b['time'];
+          case 'timeCompleted': {
+            const a1 = a['timeCompleted'];
+            const b1 = b['timeCompleted'];
             if (a1 === b1) { return 0; }
             return a1 < b1 ? 1 : -1;
           }
-          case 'timeComp': {
-            const a1 = a['timeComp'];
-            const b1 = b['timeComp'];
-            if (a1 === b1) { return 0; }
-            return a1 < b1 ? 1 : -1;
-          }
-          case 'mineDensity': {
-            return b['mineDensity'] - a['mineDensity']
+          case 'difficulty': {
+            return b['difficulty'] - a['difficulty']
           }
         }
       } else {
