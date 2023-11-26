@@ -5,3 +5,11 @@
     justify-content: center;
     text-align: center;
 }
+
+.slider-group {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-right: 10px; /* Spacing between rows */
+}
