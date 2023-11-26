@@ -24,10 +24,10 @@ const timeDescButton = document.querySelector('#timeButton.desc')
 const mineDensityAscButton = document.querySelector('#mineDensityButton.asc')
 const mineDensityDescButton = document.querySelector('#mineDensityButton.desc')
 console.log(timeAscButton,timeDescButton,mineDensityAscButton,mineDensityDescButton)
-timeAscButton.addEventListener('click', generateListener('timeButton','asc'));
-timeDescButton.addEventListener('click', generateListener('timeButton','desc'));
-mineDensityAscButton.addEventListener('click', generateListener('mineDensityButton','asc'));
-mineDensityDescButton.addEventListener('click', generateListener('mineDensityButton','desc'));
+timeAscButton.addEventListener('click', generateListener('timeCompleted','asc'));
+timeDescButton.addEventListener('click', generateListener('timeCompleted','desc'));
+mineDensityAscButton.addEventListener('click', generateListener('difficulty','asc'));
+mineDensityDescButton.addEventListener('click', generateListener('difficulty','desc'));
 
 
 
