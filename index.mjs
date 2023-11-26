@@ -241,7 +241,7 @@ app.post('/leaderboard', async (req, res) => {
 // handle tutorial requests
 
 app.get('/tutorial', (req,res) => {
-    res.render('tutorials.hbs', {subtitle: 'Tutorial',css: 'tutorials.css'})
+    res.render('tutorials.hbs', {subtitle: 'Tutorial',css: 'tutorial.css'})
 })
 
 app.get('/rules', (req, res) => {
