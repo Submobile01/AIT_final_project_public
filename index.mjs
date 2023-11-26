@@ -61,6 +61,8 @@ function sortStats(req, l) {
     const newL = [...l];
     const crit = req.query['sort-by'];
     const ord = req.query['sort-order'];
+    console.log(crit, ord)
+    console.log(newL[0])
     newL.sort((a, b)=>{
       if (ord === 'asc') {
         switch (crit) {
