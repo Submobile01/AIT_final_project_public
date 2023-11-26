@@ -1,8 +1,8 @@
 #densMine-slider-container {
     display: flex;
     flex-direction: row;
-    align-items: space-evenly;
-    justify-content:baseline;
+    align-items: center;
+    justify-content: space-evenly;
     text-align: center;
 }
 
@@ -11,7 +11,6 @@
     flex-direction: column;
     align-items: center; /* in-direction */
     justify-content: center;/* off-direction */
-    margin-bottom: 15px; /* Spacing between rows */
 }
 
 .slider-submit {
@@ -19,7 +18,6 @@
     flex-direction: row;
     align-items: center; /* in-direction */
     justify-content: center;/* off-direction */
-    margin-right: 15px; /* Spacing between rows */
 }
 
 .content-wrapper {
