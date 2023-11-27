@@ -42,7 +42,7 @@ function filterStatsList(req, l){
     //console.log("filtering")
     let userQ = req.query['userQ'];
     const username = req.session.username
-    if(userQ === 'mine') userQ = username ? username : req.session.id.substring(6)
+    if(userQ === 'mine') userQ = username ? username : req.session.id.substring(0,6)
 
     const boardSizeQ = req.query['boardSizeQ'];
     

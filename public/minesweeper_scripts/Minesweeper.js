@@ -246,7 +246,7 @@ function mousePressed() {
       if (f[row][column] === 0) {
         f[row][column] = -1;
       } else {
-        i--;
+        i--;//do it again
       }
     }
     for (let i = 0; i < rows; i++) {
