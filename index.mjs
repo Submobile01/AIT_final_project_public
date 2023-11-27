@@ -186,29 +186,47 @@ app.get('/', (req, res) => {
 
 app.post('/', async (req,res) => {
   //const sId = req.sessionID;
-  let data = req.body
-  const username = req.session.username
-  data = {...data, username: username ? username : req.session.id.substring(0,6)}
-
-  let bestTime;
-  const gameStat = new GameStat(data)
-  let gameStatList
-  try {
-    await gameStat.save()
-    gameStatList = await GameStat.find()
-  } catch(err){
-    console.error(err)
-    console.error("saving failed")
-  }
-  
-  const bestTimeStat = getBestTime(gameStatList)
-  if(bestTimeStat === null){
-    bestTime = 1e6
+  const contentType = req.headers['Content-Type'];
+  if(contentType != undefined && contentType === 'application/json'){
+    //if get request is a fetch
+    let data = req.body
+    const username = req.session.username
+    data = {...data, username: username ? username : req.session.id.substring(0,6)}
+    let bestTime;
+    const gameStat = new GameStat(data)
+    let gameStatList
+    try {
+      await gameStat.save()
+      gameStatList = await GameStat.find()
+    } catch(err){
+      console.error(err)
+      console.error("saving failed")
+    }
+    
+    const bestTimeStat = getBestTime(gameStatList)
+    if(bestTimeStat === null){
+      bestTime = 1e6
+    }else{
+      bestTime = bestTimeStat.timeCompleted
+    }
+    console.log(bestTime)
+    res.json({ bestTime});
   }else{
-    bestTime = bestTimeStat.timeCompleted
+    //if a normal post request
+
+    const { username, password } = req.body;
+    
+
+    //Create a new review document in your MongoDB using Mongoose
+    const user = new User({
+        username,
+        password,
+    });
+    //save username to session
+    req.session.username = username
+    await user.save();
   }
-  console.log(bestTime)
-  res.json({ bestTime});
+    
 })
 
 
@@ -225,16 +243,7 @@ app.get('/leaderboard', async (req, res) => {
 })
 
 app.post('/leaderboard', async (req, res) => {
-    const { username, password } = req.body;
-    //frontend: if username exist, get rid of the form
-    //save username to session
-  // Create a new review document in your MongoDB using Mongoose
-    const user = new User({
-        username,
-        password,
-    });
-    req.session.username = username
-    await user.save();
+    
     res.redirect('/leaderboard');
 })
 
