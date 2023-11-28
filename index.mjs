@@ -225,6 +225,7 @@ app.post('/', async (req,res) => {
     //save username to session
     req.session.username = username
     await user.save();
+    res.redirect('/');
   }
     
 })
