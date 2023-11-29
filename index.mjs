@@ -100,9 +100,9 @@ function sortStats(req, l) {
     return l;
   }
 }
-
-
 /** Utility functions ends */
+
+
 
 const app = express();
 const __filename = fileURLToPath(import.meta.url);
@@ -111,7 +111,7 @@ const __dirname = path.dirname(__filename);
 //import db schemas
 import "./db.mjs";
 import mongoose from 'mongoose';
-console.log(process.env.DSN);
+//console.log(process.env.DSN);
 
 //setup mongodb session store
 const MongoDBStore = connectSession(session)
@@ -151,10 +151,10 @@ if (mongoose.connection.readyState === 1) {
 
 
 app.use(express.static(path.join(__dirname, 'public')));//serves static files
-app.use(bodyParser.urlencoded({ extended: false }));//parse request body/queries
-app.use(logReq);//logs requests on server
+app.use(express.urlencoded({ extended: true }));//parse request body/queries
 app.use(cors({credentials: true,origin:true}))
-app.use(bodyParser.json({  extended:false }));//parses json
+app.use(express.json({  extended:true }));//parses json
+app.use(logReq);//logs requests on server
 
 //status code
 app.use((err, req, res, next) => {
@@ -186,8 +186,9 @@ app.get('/', (req, res) => {
 
 app.post('/', async (req,res) => {
   //const sId = req.sessionID;
-  const contentType = req.headers['Content-Type'];
-  console.log(contentType);
+  const contentType = req.headers['content-type'];
+  console.log('contentType:',contentType);
+  console.log('headers:', req.headers)
   if(contentType != undefined && contentType === 'application/json'){
     //if get request is a fetch
     console.log("receiving json")
@@ -267,6 +268,6 @@ export default app;
 
 
 
-// app.listen(process.env.PORT || 3000);
+//app.listen(process.env.PORT || 3000);
 
 
