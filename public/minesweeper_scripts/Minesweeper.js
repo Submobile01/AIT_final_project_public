@@ -1,3 +1,4 @@
+let config;
 let rows;
 let columns;
 let boardSize;
@@ -6,18 +7,20 @@ let blocks;
 let skip = false;
 let f;
 let gameStage; //1-game, 2-gameOver, 3-youWon
+let numMine;
+let densMine;
+
 let startTime;
 let endTime;
 let clickCount = 0;
-let numMine;
-let densMine;
+
 let flagCount;
 let blockCount;
 let buttonCount;
 let bestTime;
 let fireworks;
 let remainingBlocks;
-let volumeSlider;
+
 let soundFiles;
 
 
@@ -57,7 +60,7 @@ async function setup() {
   wow = loadSound("/data/wow.wav");
   ding = loadSound("/data/ding.wav");
   soundFiles = {chu,yes,hua,bang,wow,ding};
-  volumeSlider = document.getElementById("volume-slider");
+  const volumeSlider = document.getElementById("volume-slider");
   updateSoundVolume();
   if(volumeSlider) {volumeSlider.addEventListener("input", updateSoundVolume);}
 
@@ -661,6 +664,7 @@ function mousePressed() {
    * updates the volume of all sound effects base on the value of the volume-slider
    */
   function updateSoundVolume(){
+    const volumeSlider = document.getElementById('volume-slider')
     const volume = volumeSlider.value / 100;
     for(const sound in soundFiles) {
       console.log(sound);
