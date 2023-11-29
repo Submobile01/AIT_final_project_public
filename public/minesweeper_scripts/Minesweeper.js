@@ -5,10 +5,7 @@ let rows;
 let columns;
 let sideL;
 
-let blocks;
-let gameStage; //1-game, 2-gameOver, 3-youWon
-let numMine;
-let densMine;
+//gameStage 1-game, 2-gameOver, 3-youWon
 
 let bestTime;
 
@@ -33,17 +30,17 @@ async function setup() {
   config.remainingBlocks = document.getElementById("remaining-blocks");
   updateRemainingBlocks();
 
-  densMine = 0.18;
+  config.densMine = 0.18;
   const slider = document.getElementById("slider");
   const saveButton = document.getElementById("saveButton"); 
   if(slider) {slider.addEventListener("input", ()=>{
     document.getElementById("sliderValue").innerHTML = "Mine density is <strong>" + slider.value + "%</strong>    ";
   });}
   if(saveButton) {saveButton.addEventListener("click", function() {
-    densMine = parseInt(slider.value)/100;
+    config.densMine = parseInt(slider.value)/100;
     // Update the game variable using the slider value
     restart();
-    console.log("mine density is ", densMine);
+    console.log("mine density is ", config.densMine);
   });}
   
   restart();
@@ -68,15 +65,15 @@ async function setup() {
 }
 
 function draw() {
-  if (gameStage === 1) {
+  if (config.gameStage === 1) {
 
-  } else if (gameStage === 2) {
+  } else if (config.gameStage === 2) {
     //drawRestart();
     //drawAllMines();
   } else {
     for (let i = 0; i < rows; i++) {
       for (let j = 0; j < columns; j++) {
-        blocks[i][j].drawIt();
+        config.blocks[i][j].drawIt();
       }
     }
     drawWinBoard();
@@ -97,11 +94,11 @@ function mouseClicked() {
 }
 
 function mousePressed() {
-  if (gameStage === 1) {
+  if (config.gameStage === 1) {
     const y = Math.floor(mouseY / sideL);
     const x = Math.floor(mouseX / sideL);
     if(0 <= y && 0 <= x && y < rows && x < columns){
-      const theBlock = blocks[y][x];
+      const theBlock = config.blocks[y][x];
     
     //console.log(theBlock.colorCode);
       if (mouseButton === LEFT) {
@@ -119,11 +116,11 @@ function mousePressed() {
  async function mouseReleased() {
     // when playing
     console.log(mouseButton);
-    if (gameStage === 1) {
+    if (config.gameStage === 1) {
       const y = Math.floor(mouseY / sideL);
       const x = Math.floor(mouseX / sideL);
       if(!(0 <= y && 0 <= x && y < rows && x < columns)) return; 
-      let theBlock = blocks[y][x];
+      let theBlock = config.blocks[y][x];
       if (mouseButton === LEFT) {
         config.buttonCount--;
         lightBlock(y, x, Block.ORIGSTATE);
@@ -142,12 +139,12 @@ function mousePressed() {
           // println(config.clickCount);
           if (config.clickCount === 0) {
             config.startTime = hour() * 3600 + minute() * 60 + second();
-            while (blocks[y][x].getNumber() !== 0) {
+            while (config.blocks[y][x].getNumber() !== 0) {
               reGenBlocks();
-              // println(blocks[y][x].getNumber());
+              // println(config.blocks[y][x].getNumber());
             }
           }
-          theBlock = blocks[y][x];
+          theBlock = config.blocks[y][x];
           config.clickCount++;
           activateBlock(y, x);
         } else if (mouseButton === RIGHT) {
@@ -166,9 +163,9 @@ function mousePressed() {
         // theBlock.drawIt();
       }
       updateRemainingBlocks();
-      if (config.blockCount === rows * columns - numMine) {
+      if (config.blockCount === rows * columns - config.numMine) {
         config.soundFiles.yes.play();
-        gameStage = 3;
+        config.gameStage = 3;
         config.endTime = hour() * 3600 + minute() * 60 + second();
         await fetchBestTime();
         for (let i = 0; i < 8; i++) {//generate config.fireworks
@@ -187,7 +184,7 @@ function mousePressed() {
     }
   
     // when gameOver
-    if (gameStage === 2) {
+    if (config.gameStage === 2) {
       drawAllMines();
       drawRestart();
       if (
@@ -199,7 +196,7 @@ function mousePressed() {
         restart();
       }
     }
-    if (gameStage === 3) {
+    if (config.gameStage === 3) {
       if (
         mouseX > width * 0.45 &&
         mouseX < width * 0.55 &&
@@ -222,7 +219,7 @@ function mousePressed() {
         config.fireworks.push(new Firework(rs, xs, ys, re, gr, bl));
       }
     }
-    //console.log(rows * columns - numMine - config.blockCount);
+    //console.log(rows * columns - config.numMine - config.blockCount);
   }
 
   /**
@@ -246,8 +243,8 @@ function mousePressed() {
     for (let i = 0; i < rows; i++) {
       for (let j = 0; j < columns; j++) {
         if (f[i][j] === -1) {
-          blocks[i][j].number = -1;
-          //blocks[i][j].state = 3;
+          config.blocks[i][j].number = -1;
+          //config.blocks[i][j].state = 3;
         }
       }
     }
@@ -260,36 +257,36 @@ function mousePressed() {
   function getNumbers() {
     for (let i = 0; i < rows; i++) {
       for (let j = 0; j < columns; j++) {
-        if (blocks[i][j].number !== -1) {
+        if (config.blocks[i][j].number !== -1) {
           // not left most
           if (i !== 0) {
             if (j !== 0) {
-              if (blocks[i - 1][j - 1].number === -1) {blocks[i][j].number++;}
+              if (config.blocks[i - 1][j - 1].number === -1) {config.blocks[i][j].number++;}
             }
             if (j !== columns - 1) {
-              if (blocks[i - 1][j + 1].number === -1) {blocks[i][j].number++;}
+              if (config.blocks[i - 1][j + 1].number === -1) {config.blocks[i][j].number++;}
             }
-            if (blocks[i - 1][j].number === -1) {blocks[i][j].number++;}
+            if (config.blocks[i - 1][j].number === -1) {config.blocks[i][j].number++;}
           }
           // not right most
           if (i !== rows - 1) {
             if (j !== 0) {
-              if (blocks[i + 1][j - 1].number === -1) {blocks[i][j].number++;}
+              if (config.blocks[i + 1][j - 1].number === -1) {config.blocks[i][j].number++;}
             }
             if (j !== columns - 1) {
-              if (blocks[i + 1][j + 1].number === -1) {blocks[i][j].number++;}
+              if (config.blocks[i + 1][j + 1].number === -1) {config.blocks[i][j].number++;}
             }
-            if (blocks[i + 1][j].number === -1) {blocks[i][j].number++;}
+            if (config.blocks[i + 1][j].number === -1) {config.blocks[i][j].number++;}
           }
           // neutral
           if (j !== 0) {
-            if (blocks[i][j - 1].number === -1) {blocks[i][j].number++;}
+            if (config.blocks[i][j - 1].number === -1) {config.blocks[i][j].number++;}
           }
           if (j !== columns - 1) {
-            if (blocks[i][j + 1].number === -1) {blocks[i][j].number++;}
+            if (config.blocks[i][j + 1].number === -1) {config.blocks[i][j].number++;}
           }
         }
-        // if(blocks[i][j].number>=0) blocks[i][j].state = 2;(toTest)
+        // if(config.blocks[i][j].number>=0) config.blocks[i][j].state = 2;(toTest)
       }
     }
   }
@@ -301,11 +298,11 @@ function mousePressed() {
    * @param {integer} j horizontal index of the block selected
    */
   function triggerZero(i, j) {
-    if (blocks[i][j].getState() === ORIGSTATE || blocks[i][j].getState() === Block.LIGHTEDSTATE) {
-      blocks[i][j].setState(Block.REVEALEDSTATE);
+    if (config.blocks[i][j].getState() === ORIGSTATE || config.blocks[i][j].getState() === Block.LIGHTEDSTATE) {
+      config.blocks[i][j].setState(Block.REVEALEDSTATE);
       config.blockCount++;
       // println(config.blockCount);
-      if (blocks[i][j].getNumber() === 0) {
+      if (config.blocks[i][j].getNumber() === 0) {
         if (i !== 0) {
           if (j !== 0) {
             triggerZero(i - 1, j - 1);
@@ -348,29 +345,29 @@ function mousePressed() {
     let count = 0;
     if (i !== 0) {
       if (j !== 0) {
-        if (blocks[i - 1][j - 1].getState() === Block.FLAGSTATE) {count++;}
+        if (config.blocks[i - 1][j - 1].getState() === Block.FLAGSTATE) {count++;}
       }
       if (j !== columns - 1) {
-        if (blocks[i - 1][j + 1].getState() === Block.FLAGSTATE) {count++;}
+        if (config.blocks[i - 1][j + 1].getState() === Block.FLAGSTATE) {count++;}
       }
-      if (blocks[i - 1][j].getState() === Block.FLAGSTATE) {count++;}
+      if (config.blocks[i - 1][j].getState() === Block.FLAGSTATE) {count++;}
     }
     // not right most
     if (i !== rows - 1) {
       if (j !== 0) {
-        if (blocks[i + 1][j - 1].getState() === Block.FLAGSTATE) {count++;}
+        if (config.blocks[i + 1][j - 1].getState() === Block.FLAGSTATE) {count++;}
       }
       if (j !== columns - 1) {
-        if (blocks[i + 1][j + 1].getState() === Block.FLAGSTATE) {count++;}
+        if (config.blocks[i + 1][j + 1].getState() === Block.FLAGSTATE) {count++;}
       }
-      if (blocks[i + 1][j].getState() === Block.FLAGSTATE) {count++;}
+      if (config.blocks[i + 1][j].getState() === Block.FLAGSTATE) {count++;}
     }
     // neutral
     if (j !== 0) {
-      if (blocks[i][j - 1].getState() === Block.FLAGSTATE) {count++;}
+      if (config.blocks[i][j - 1].getState() === Block.FLAGSTATE) {count++;}
     }
     if (j !== columns - 1) {
-      if (blocks[i][j + 1].getState() === Block.FLAGSTATE) {count++;}
+      if (config.blocks[i][j + 1].getState() === Block.FLAGSTATE) {count++;}
     }
     return count;
   }
@@ -454,7 +451,7 @@ function mousePressed() {
   function drawAllMines() {
     for (let i = 0; i < rows; i++) {
       for (let j = 0; j < columns; j++) {
-        const theBlock = blocks[i][j];
+        const theBlock = config.blocks[i][j];
         if (theBlock.getNumber() === -1) {
           if (theBlock.getState() === Block.ORIGSTATE) {
             theBlock.setState(Block.REVEALEDSTATE);
@@ -472,13 +469,13 @@ function mousePressed() {
    * @param {integer} j horizontal index of the block selected
    */
   function activateBlock(i, j) {
-    const theBlock = blocks[i][j];
+    const theBlock = config.blocks[i][j];
     if (theBlock.getState() === Block.ORIGSTATE || theBlock.getState() === 3) {//?
       if (theBlock.getNumber() === -1) {
-        gameStage = 2;
+        config.gameStage = 2;
         config.soundFiles.bang.play();
         config.endTime = hour() * 3600 + minute() * 60 + second();
-      } else if (config.blockCount === rows * columns - numMine) {
+      } else if (config.blockCount === rows * columns - config.numMine) {
       } else if (theBlock.getNumber() === 0) {
         triggerZero(i, j);
         config.soundFiles.wow.play();
@@ -499,7 +496,7 @@ function mousePressed() {
    * @param {integer} state the state to set the block
    */
   function lightBlock(i, j, state) {
-    const theBlock = blocks[i][j];
+    const theBlock = config.blocks[i][j];
     if (
       theBlock.getState() !== state &&
       theBlock.getState() !== Block.REVEALEDSTATE &&
@@ -542,13 +539,13 @@ function mousePressed() {
    * and regenerate/redraw the blocks
    */
   function restart() {
-    gameStage = 1;
+    config.gameStage = 1;
     config.flagCount = 0;
     config.blockCount = 0;
     config.clickCount = 0;
-    numMine = round(rows * columns * densMine);
+    config.numMine = round(rows * columns * config.densMine);
     sideL = height / rows;
-    blocks = new Array(rows);
+    config.blocks = new Array(rows);
     config.fireworks = [];
     background(0);
     
@@ -557,7 +554,7 @@ function mousePressed() {
     //draw the initial
     for (let i = 0; i < rows; i++) {
       for (let j = 0; j < columns; j++) {
-        blocks[i][j].drawIt();
+        config.blocks[i][j].drawIt();
       }
     }
   }
@@ -569,13 +566,13 @@ function mousePressed() {
   function reGenBlocks() {
     //instantiate each Block
     for (let i = 0; i < rows; i++) {
-      blocks[i] = new Array(columns);
+      config.blocks[i] = new Array(columns);
       for (let j = 0; j < columns; j++) {
-        blocks[i][j] = new Block(j, i, height / rows);
+        config.blocks[i][j] = new Block(j, i, height / rows);
       }
     }
     //generate mines and numbers
-    genField(numMine);
+    genField(config.numMine);
   }
   
 
@@ -618,7 +615,7 @@ function mousePressed() {
   async function fetchBestTime(){
     let thisTime = config.endTime-config.startTime
     console.log("fetch starts")
-    console.log(JSON.stringify({difficulty:densMine,boardSize,clicks:config.clickCount,timeCompleted: thisTime}))
+    console.log(JSON.stringify({difficulty:config.densMine,boardSize,clicks:config.clickCount,timeCompleted: thisTime}))
     
 
     const bestTimeRes = await fetch('/', {
@@ -631,7 +628,7 @@ function mousePressed() {
         // 'Access-Control-Allow-Methods': 'GET,POST,PUT,DELETE',
         // 'Access-Control-Allow-Headers': 'Content-Type'
       },
-      body: JSON.stringify({difficulty:densMine,boardSize,clicks:config.clickCount,timeCompleted: thisTime}),
+      body: JSON.stringify({difficulty:config.densMine,boardSize,clicks:config.clickCount,timeCompleted: thisTime}),
     })
     
       
@@ -651,7 +648,7 @@ function mousePressed() {
    * to be activated to the element named config.remainingBlocks on html
    */
   function updateRemainingBlocks(){
-    let remBlocks = rows * columns - numMine;
+    let remBlocks = rows * columns - config.numMine;
     if(config.blockCount) {remBlocks -= config.blockCount;}
     if(config.remainingBlocks) {config.remainingBlocks.innerHTML = "Blocks Remaining: " + remBlocks + ".   ";}
   }
