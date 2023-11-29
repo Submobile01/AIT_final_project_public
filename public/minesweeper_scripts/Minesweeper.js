@@ -24,7 +24,7 @@ let bestTime;
 let fireworks;
 let remainingBlocks;
 let volumeSlider;
-
+let soundFiles;
 
 
 
