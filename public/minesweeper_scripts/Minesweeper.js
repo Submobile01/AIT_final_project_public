@@ -56,13 +56,13 @@ async function setup() {
   restart();
 
   //load
-  soundFiles = {};
-  chu = loadSound("/data/chu.wav");soundFiles = {...soundFiles,chu};
-  yes = loadSound("/data/yes.wav");soundFiles = {...soundFiles,yes};
-  hua = loadSound("/data/hua.wav");soundFiles = {...soundFiles,hua};
-  bang = loadSound("/data/bang.wav");soundFiles = {...soundFiles,bang};
-  wow = loadSound("/data/wow.wav");soundFiles = {...soundFiles,wow};
-  ding = loadSound("/data/ding.wav");soundFiles = {...soundFiles,ding};
+  chu = loadSound("/data/chu.wav");
+  yes = loadSound("/data/yes.wav");
+  hua = loadSound("/data/hua.wav");
+  bang = loadSound("/data/bang.wav");
+  wow = loadSound("/data/wow.wav");
+  ding = loadSound("/data/ding.wav");
+  soundFiles = {chu,yes,hua,bang,wow,ding};
   volumeSlider = document.getElementById("volume-slider");
   updateSoundVolume();
   if(volumeSlider) {volumeSlider.addEventListener("input", updateSoundVolume);}
@@ -668,5 +668,8 @@ function mousePressed() {
    */
   function updateSoundVolume(){
     const volume = volumeSlider.value / 100;
-    for(const sound of soundFiles.values()) {sound.setVolume(volume);}
+    for(const sound in soundFiles) {
+      console.log(sound);
+      soundFiles[sound].setVolume(volume);
+    }
   }
