@@ -187,6 +187,7 @@ app.get('/', (req, res) => {
 app.post('/', async (req,res) => {
   //const sId = req.sessionID;
   const contentType = req.headers['Content-Type'];
+  console.log(contentType);
   if(contentType != undefined && contentType === 'application/json'){
     //if get request is a fetch
     console.log("receiving json")
