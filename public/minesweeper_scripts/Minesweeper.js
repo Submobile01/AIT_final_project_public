@@ -14,12 +14,9 @@ let bestTime;
 let startTime;
 let endTime;
 
-let clickCount = 0;
+
 let remainingBlocks;
 
-let flagCount;
-let blockCount;
-let buttonCount;
 
 
 
@@ -28,6 +25,7 @@ let buttonCount;
 
 async function setup() {
   config = {};
+  config.clickCount = 0
   gameCanvas = createCanvas(800, 600);
   gameCanvas.parent("main-canvas");
   // canvasDiv = document.getElementById("canvas-container");
@@ -110,10 +108,10 @@ function mousePressed() {
     
     //console.log(theBlock.colorCode);
       if (mouseButton === LEFT) {
-        buttonCount++;
+        config.buttonCount++;
         lightBlock(y, x, 3);
       } else if (mouseButton === RIGHT) {
-        buttonCount++;
+        config.buttonCount++;
       }
       if ( theBlock.getState() === Block.REVEALEDSTATE) {
         lightAround(y, x, Block.LIGHTEDSTATE);
@@ -130,10 +128,10 @@ function mousePressed() {
       if(!(0 <= y && 0 <= x && y < rows && x < columns)) return; 
       let theBlock = blocks[y][x];
       if (mouseButton === LEFT) {
-        buttonCount--;
+        config.buttonCount--;
         lightBlock(y, x, Block.ORIGSTATE);
       } else if (mouseButton === RIGHT) {
-        buttonCount--;
+        config.buttonCount--;
       }
       if (theBlock.getState() === Block.REVEALEDSTATE && countFlags(y, x) === theBlock.getNumber()) {
         flipAround(y, x);
@@ -144,8 +142,8 @@ function mousePressed() {
       if (theBlock.getState() !== Block.REVEALEDSTATE) {
         if (mouseButton === LEFT) {
           // first click stuff
-          // println(clickCount);
-          if (clickCount === 0) {
+          // println(config.clickCount);
+          if (config.clickCount === 0) {
             startTime = hour() * 3600 + minute() * 60 + second();
             while (blocks[y][x].getNumber() !== 0) {
               reGenBlocks();
@@ -153,16 +151,16 @@ function mousePressed() {
             }
           }
           theBlock = blocks[y][x];
-          clickCount++;
+          config.clickCount++;
           activateBlock(y, x);
         } else if (mouseButton === RIGHT) {
           config.soundFiles.chu.play();
           if (theBlock.getState() === Block.FLAGSTATE) {
             theBlock.setState(Block.ORIGSTATE);
-            flagCount--;
+            config.flagCount--;
           } else {
             theBlock.setState(Block.FLAGSTATE);
-            flagCount++;
+            config.flagCount++;
           }
         }
         /*else if(mouseButton == CENTER){
@@ -171,7 +169,7 @@ function mousePressed() {
         // theBlock.drawIt();
       }
       updateRemainingBlocks();
-      if (blockCount === rows * columns - numMine) {
+      if (config.blockCount === rows * columns - numMine) {
         config.soundFiles.yes.play();
         gameStage = 3;
         endTime = hour() * 3600 + minute() * 60 + second();
@@ -227,7 +225,7 @@ function mousePressed() {
         config.fireworks.push(new Firework(rs, xs, ys, re, gr, bl));
       }
     }
-    //console.log(rows * columns - numMine - blockCount);
+    //console.log(rows * columns - numMine - config.blockCount);
   }
 
   /**
@@ -308,8 +306,8 @@ function mousePressed() {
   function triggerZero(i, j) {
     if (blocks[i][j].getState() === ORIGSTATE || blocks[i][j].getState() === Block.LIGHTEDSTATE) {
       blocks[i][j].setState(Block.REVEALEDSTATE);
-      blockCount++;
-      // println(blockCount);
+      config.blockCount++;
+      // println(config.blockCount);
       if (blocks[i][j].getNumber() === 0) {
         if (i !== 0) {
           if (j !== 0) {
@@ -483,15 +481,15 @@ function mousePressed() {
         gameStage = 2;
         config.soundFiles.bang.play();
         endTime = hour() * 3600 + minute() * 60 + second();
-      } else if (blockCount === rows * columns - numMine) {
+      } else if (config.blockCount === rows * columns - numMine) {
       } else if (theBlock.getNumber() === 0) {
         triggerZero(i, j);
         config.soundFiles.wow.play();
       } else {
-        blockCount++;
+        config.blockCount++;
         config.soundFiles.ding.play();
       }
-      // println(blockCount);
+      // println(config.blockCount);
       theBlock.setState(Block.REVEALEDSTATE);
     }
   }
@@ -548,9 +546,9 @@ function mousePressed() {
    */
   function restart() {
     gameStage = 1;
-    flagCount = 0;
-    blockCount = 0;
-    clickCount = 0;
+    config.flagCount = 0;
+    config.blockCount = 0;
+    config.clickCount = 0;
     numMine = round(rows * columns * densMine);
     sideL = height / rows;
     blocks = new Array(rows);
@@ -623,7 +621,7 @@ function mousePressed() {
   async function fetchBestTime(){
     let thisTime = endTime-startTime
     console.log("fetch starts")
-    console.log(JSON.stringify({difficulty:densMine,boardSize,clicks:clickCount,timeCompleted: thisTime}))
+    console.log(JSON.stringify({difficulty:densMine,boardSize,clicks:config.clickCount,timeCompleted: thisTime}))
     
 
     const bestTimeRes = await fetch('/', {
@@ -636,7 +634,7 @@ function mousePressed() {
         // 'Access-Control-Allow-Methods': 'GET,POST,PUT,DELETE',
         // 'Access-Control-Allow-Headers': 'Content-Type'
       },
-      body: JSON.stringify({difficulty:densMine,boardSize,clicks:clickCount,timeCompleted: thisTime}),
+      body: JSON.stringify({difficulty:densMine,boardSize,clicks:config.clickCount,timeCompleted: thisTime}),
     })
     
       
@@ -657,7 +655,7 @@ function mousePressed() {
    */
   function updateRemainingBlocks(){
     let remBlocks = rows * columns - numMine;
-    if(blockCount) {remBlocks -= blockCount;}
+    if(config.blockCount) {remBlocks -= config.blockCount;}
     if(remainingBlocks) {remainingBlocks.innerHTML = "Blocks Remaining: " + remBlocks + ".   ";}
   }
 
