@@ -629,7 +629,7 @@ function mousePressed() {
         // 'Access-Control-Allow-Headers': 'Content-Type'
       },
       body: jsonStr,
-    })
+    })//content-type unrecognized
     
       
     const bestTimeData = await bestTimeRes.json()

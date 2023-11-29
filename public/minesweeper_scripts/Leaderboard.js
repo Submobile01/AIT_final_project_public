@@ -33,9 +33,9 @@ mineDensityDescButton.addEventListener('click', generateListener('difficulty','d
 
 
 
-function handleSubmit(event){
+// function handleSubmit(event){
     
     
-}
+// }
 
-userSubmit.addEventListener('click', handleSubmit)
+// userSubmit.addEventListener('click', handleSubmit)
