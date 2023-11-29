@@ -1,26 +1,29 @@
 let config;
+
+let boardSize;
 let rows;
 let columns;
-let boardSize;
 let sideL;
+
 let blocks;
-let skip = false;
-let f;
 let gameStage; //1-game, 2-gameOver, 3-youWon
 let numMine;
 let densMine;
 
 let startTime;
 let endTime;
+
 let clickCount = 0;
+let remainingBlocks;
 
 let flagCount;
 let blockCount;
 let buttonCount;
 let bestTime;
-let fireworks;
-let remainingBlocks;
 
+
+
+let fireworks;
 let soundFiles;
 
 
@@ -465,7 +468,6 @@ function mousePressed() {
         } else if (theBlock.getState() === Block.FLAGSTATE) {theBlock.drawCross();}
       }
     }
-    skip = false;
   }
   
 
