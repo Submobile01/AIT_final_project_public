@@ -10,6 +10,7 @@ let gameStage; //1-game, 2-gameOver, 3-youWon
 let numMine;
 let densMine;
 
+let bestTime;
 let startTime;
 let endTime;
 
@@ -19,12 +20,8 @@ let remainingBlocks;
 let flagCount;
 let blockCount;
 let buttonCount;
-let bestTime;
 
 
-
-let fireworks;
-let soundFiles;
 
 
 
@@ -62,7 +59,8 @@ async function setup() {
   bang = loadSound("/data/bang.wav");
   wow = loadSound("/data/wow.wav");
   ding = loadSound("/data/ding.wav");
-  soundFiles = {chu,yes,hua,bang,wow,ding};
+  config.resources.soundFiles = {chu,yes,hua,bang,wow,ding};
+
   const volumeSlider = document.getElementById("volume-slider");
   updateSoundVolume();
   if(volumeSlider) {volumeSlider.addEventListener("input", updateSoundVolume);}
@@ -86,9 +84,9 @@ function draw() {
       }
     }
     drawWinBoard();
-    for (let i = 0; i < fireworks.length; i++) {
-      if (fireworks[i].inBound()) {
-        fireworks[i].drawIt();
+    for (let i = 0; i < config.resources.fireworks.length; i++) {
+      if (config.resources.fireworks[i].inBound()) {
+        config.resources.fireworks[i].drawIt();
       }
     }
   }
@@ -157,7 +155,7 @@ function mousePressed() {
           clickCount++;
           activateBlock(y, x);
         } else if (mouseButton === RIGHT) {
-          soundFiles.chu.play();
+          config.resources.soundFiles.chu.play();
           if (theBlock.getState() === Block.FLAGSTATE) {
             theBlock.setState(Block.ORIGSTATE);
             flagCount--;
@@ -173,11 +171,11 @@ function mousePressed() {
       }
       updateRemainingBlocks();
       if (blockCount === rows * columns - numMine) {
-        soundFiles.yes.play();
+        config.resources.soundFiles.yes.play();
         gameStage = 3;
         endTime = hour() * 3600 + minute() * 60 + second();
         await fetchBestTime();
-        for (let i = 0; i < 8; i++) {//generate fireworks
+        for (let i = 0; i < 8; i++) {//generate config.resources.fireworks
           let ranSign = 1;
           if (random(2) > 1) {ranSign = -1;}
           const xs = random(10) * ranSign;
@@ -186,7 +184,7 @@ function mousePressed() {
           const re = 140 + floor(random(100));
           const gr = 100 + floor(random(90));
           const bl = 100 + floor(random(90));
-          fireworks.push(new Firework(rs, xs, ys, re, gr, bl));
+          config.resources.fireworks.push(new Firework(rs, xs, ys, re, gr, bl));
         }
         
       }
@@ -214,7 +212,7 @@ function mousePressed() {
       ) {
         restart();
       } else {
-        soundFiles.hua.play();
+        config.resources.soundFiles.hua.play();
       }
       for (let i = 0; i < 8; i++) {
         let ranSign = 1;
@@ -225,10 +223,10 @@ function mousePressed() {
         const re = 140 + floor(random(100));
         const gr = 100 + floor(random(90));
         const bl = 100 + floor(random(90));
-        fireworks.push(new Firework(rs, xs, ys, re, gr, bl));
+        config.resources.fireworks.push(new Firework(rs, xs, ys, re, gr, bl));
       }
     }
-    console.log(rows * columns - numMine - blockCount);
+    //console.log(rows * columns - numMine - blockCount);
   }
 
   /**
@@ -482,15 +480,15 @@ function mousePressed() {
     if (theBlock.getState() === Block.ORIGSTATE || theBlock.getState() === 3) {//?
       if (theBlock.getNumber() === -1) {
         gameStage = 2;
-        soundFiles.bang.play();
+        config.resources.soundFiles.bang.play();
         endTime = hour() * 3600 + minute() * 60 + second();
       } else if (blockCount === rows * columns - numMine) {
       } else if (theBlock.getNumber() === 0) {
         triggerZero(i, j);
-        soundFiles.wow.play();
+        config.resources.soundFiles.wow.play();
       } else {
         blockCount++;
-        soundFiles.ding.play();
+        config.resources.soundFiles.ding.play();
       }
       // println(blockCount);
       theBlock.setState(Block.REVEALEDSTATE);
@@ -555,7 +553,7 @@ function mousePressed() {
     numMine = round(rows * columns * densMine);
     sideL = height / rows;
     blocks = new Array(rows);
-    fireworks = [];
+    config.resources.fireworks = [];
     background(0);
     
     reGenBlocks();
@@ -668,8 +666,8 @@ function mousePressed() {
   function updateSoundVolume(){
     const volumeSlider = document.getElementById('volume-slider')
     const volume = volumeSlider.value / 100;
-    for(const sound in soundFiles) {
+    for(const sound in config.resources.soundFiles) {
       console.log(sound);
-      soundFiles[sound].setVolume(volume);
+      config.resources.soundFiles[sound].setVolume(volume);
     }
   }
