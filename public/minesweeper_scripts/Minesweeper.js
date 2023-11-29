@@ -5,12 +5,6 @@ let sideL;
 let blocks;
 let skip = false;
 let f;
-let chu;
-let yes;
-let hua;
-let bang;
-let wow;
-let ding;
 let gameStage; //1-game, 2-gameOver, 3-youWon
 let startTime;
 let endTime;
@@ -157,7 +151,7 @@ function mousePressed() {
           clickCount++;
           activateBlock(y, x);
         } else if (mouseButton === RIGHT) {
-          chu.play();
+          soundFiles.chu.play();
           if (theBlock.getState() === Block.FLAGSTATE) {
             theBlock.setState(Block.ORIGSTATE);
             flagCount--;
@@ -173,7 +167,7 @@ function mousePressed() {
       }
       updateRemainingBlocks();
       if (blockCount === rows * columns - numMine) {
-        yes.play();
+        soundFiles.yes.play();
         gameStage = 3;
         endTime = hour() * 3600 + minute() * 60 + second();
         await fetchBestTime();
@@ -214,7 +208,7 @@ function mousePressed() {
       ) {
         restart();
       } else {
-        hua.play();
+        soundFiles.hua.play();
       }
       for (let i = 0; i < 8; i++) {
         let ranSign = 1;
@@ -483,15 +477,15 @@ function mousePressed() {
     if (theBlock.getState() === Block.ORIGSTATE || theBlock.getState() === 3) {//?
       if (theBlock.getNumber() === -1) {
         gameStage = 2;
-        bang.play();
+        soundFiles.bang.play();
         endTime = hour() * 3600 + minute() * 60 + second();
       } else if (blockCount === rows * columns - numMine) {
       } else if (theBlock.getNumber() === 0) {
         triggerZero(i, j);
-        wow.play();
+        soundFiles.wow.play();
       } else {
         blockCount++;
-        ding.play();
+        soundFiles.ding.play();
       }
       // println(blockCount);
       theBlock.setState(Block.REVEALEDSTATE);
