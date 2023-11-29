@@ -614,7 +614,7 @@ function mousePressed() {
   async function fetchBestTime(){
     let thisTime = config.endTime-config.startTime
     console.log("fetch starts")
-    console.log(JSON.stringify({difficulty:config.densMine,config.boardSize,clicks:config.clickCount,timeCompleted: thisTime}))
+    console.log(JSON.stringify({difficulty:config.densMine,boardSize:config.boardSize,clicks:config.clickCount,timeCompleted: thisTime}))
     
 
     const bestTimeRes = await fetch('/', {
@@ -627,7 +627,7 @@ function mousePressed() {
         // 'Access-Control-Allow-Methods': 'GET,POST,PUT,DELETE',
         // 'Access-Control-Allow-Headers': 'Content-Type'
       },
-      body: JSON.stringify({difficulty:config.densMine,config.boardSize,clicks:config.clickCount,timeCompleted: thisTime}),
+      body: JSON.stringify({difficulty:config.densMine,boardSize:config.boardSize,clicks:config.clickCount,timeCompleted: thisTime}),
     })
     
       
