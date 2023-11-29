@@ -11,11 +11,8 @@ let numMine;
 let densMine;
 
 let bestTime;
-let startTime;
-let endTime;
 
 
-let remainingBlocks;
 
 
 
@@ -33,7 +30,7 @@ async function setup() {
   rows = 15;
   columns = 20;
   boardSize = {rows,columns};
-  remainingBlocks = document.getElementById("remaining-blocks");
+  config.remainingBlocks = document.getElementById("remaining-blocks");
   updateRemainingBlocks();
 
   densMine = 0.18;
@@ -144,7 +141,7 @@ function mousePressed() {
           // first click stuff
           // println(config.clickCount);
           if (config.clickCount === 0) {
-            startTime = hour() * 3600 + minute() * 60 + second();
+            config.startTime = hour() * 3600 + minute() * 60 + second();
             while (blocks[y][x].getNumber() !== 0) {
               reGenBlocks();
               // println(blocks[y][x].getNumber());
@@ -172,7 +169,7 @@ function mousePressed() {
       if (config.blockCount === rows * columns - numMine) {
         config.soundFiles.yes.play();
         gameStage = 3;
-        endTime = hour() * 3600 + minute() * 60 + second();
+        config.endTime = hour() * 3600 + minute() * 60 + second();
         await fetchBestTime();
         for (let i = 0; i < 8; i++) {//generate config.fireworks
           let ranSign = 1;
@@ -480,7 +477,7 @@ function mousePressed() {
       if (theBlock.getNumber() === -1) {
         gameStage = 2;
         config.soundFiles.bang.play();
-        endTime = hour() * 3600 + minute() * 60 + second();
+        config.endTime = hour() * 3600 + minute() * 60 + second();
       } else if (config.blockCount === rows * columns - numMine) {
       } else if (theBlock.getNumber() === 0) {
         triggerZero(i, j);
@@ -591,7 +588,7 @@ function mousePressed() {
     //the words
     let bestTimeString;
     if(!bestTime) {bestTime = 0;}
-    const thisTime = endTime - startTime;
+    const thisTime = config.endTime - config.startTime;
 
 
     
@@ -619,7 +616,7 @@ function mousePressed() {
   }
 
   async function fetchBestTime(){
-    let thisTime = endTime-startTime
+    let thisTime = config.endTime-config.startTime
     console.log("fetch starts")
     console.log(JSON.stringify({difficulty:densMine,boardSize,clicks:config.clickCount,timeCompleted: thisTime}))
     
@@ -651,12 +648,12 @@ function mousePressed() {
 
   /**
    * updates the remaining number of blocks (without mines)
-   * to be activated to the element named remainingBlocks on html
+   * to be activated to the element named config.remainingBlocks on html
    */
   function updateRemainingBlocks(){
     let remBlocks = rows * columns - numMine;
     if(config.blockCount) {remBlocks -= config.blockCount;}
-    if(remainingBlocks) {remainingBlocks.innerHTML = "Blocks Remaining: " + remBlocks + ".   ";}
+    if(config.remainingBlocks) {config.remainingBlocks.innerHTML = "Blocks Remaining: " + remBlocks + ".   ";}
   }
 
   /**
