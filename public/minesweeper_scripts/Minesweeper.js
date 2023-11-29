@@ -27,6 +27,7 @@ let buttonCount;
 
 
 async function setup() {
+  config = {};
   config.resources = {};
   gameCanvas = createCanvas(800, 600);
   gameCanvas.parent("main-canvas");
