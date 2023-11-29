@@ -189,6 +189,7 @@ app.post('/', async (req,res) => {
   const contentType = req.headers['Content-Type'];
   if(contentType != undefined && contentType === 'application/json'){
     //if get request is a fetch
+    console.log("receiving json")
     let data = req.body
     const username = req.session.username
     data = {...data, username: username ? username : req.session.id.substring(0,6)}
