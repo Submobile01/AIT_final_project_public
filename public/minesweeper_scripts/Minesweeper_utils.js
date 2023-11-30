@@ -6,9 +6,10 @@
    */
 function genField(numMine, config,boardSetup) {
     if(boardSetup){
-        for(let i=0; i<boardSetup.length; i++){
-            for(let j=0; j<boardSetup[0].length; j++){
-                config.blocks[i][j].number = -1;
+        console.log(boardSetup)
+        for(let i=0; i<config.boardSize.rows; i++){
+            for(let j=0; j<config.boardSize.columns; j++){
+                if(boardSetup[i][j] == -1) config.blocks[i][j].number = -1;
             }
         }
 

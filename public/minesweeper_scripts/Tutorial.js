@@ -1,7 +1,7 @@
 
     let config;
     setup = function(){
-        canvas1 = createCanvas(200, 200);
+        canvas1 = createCanvas(100, 200);
         canvas1.parent('canvas1')
         config = {};
         config.clickCount = 0
@@ -14,7 +14,7 @@
         updateRemainingBlocks(config);
 
         //config.densMine = 0.18;
-        boardSetup = [[-1,0,0,0],[0,0,0,0]]
+        boardSetup = [[-1,0],[0,0],[0,0],[0,0]]
         const slider = document.getElementById("slider");
         const saveButton = document.getElementById("saveButton"); 
         if(slider) {slider.addEventListener("input", ()=>{
@@ -39,8 +39,8 @@
         config.soundFiles = {chu,yes,hua,bang,wow,ding};
 
         const volumeSlider = document.getElementById("volume-slider");
-        updateSoundVolume(config);
-        if(volumeSlider) {volumeSlider.addEventListener("input", updateSoundVolume);}
+        //updateSoundVolume(config);
+        //if(volumeSlider) {volumeSlider.addEventListener("input", updateSoundVolume);}
 
 
         for (const element of document.getElementsByClassName("p5Canvas")) {
@@ -114,10 +114,10 @@
             // println(config.clickCount);
             if (config.clickCount === 0) {
                 config.startTime = hour() * 3600 + minute() * 60 + second();
-                while (config.blocks[y][x].getNumber() !== 0) {
-                reGenBlocks( config);
-                // println(config.blocks[y][x].getNumber());
-                }
+                // while (config.blocks[y][x].getNumber() !== 0) {
+                //     reGenBlocks( config);
+                // // println(config.blocks[y][x].getNumber());
+                // }
             }
             theBlock = config.blocks[y][x];
             config.clickCount++;
