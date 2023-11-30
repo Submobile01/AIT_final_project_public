@@ -3,8 +3,8 @@
     flex-direction: row;
     align-items: stretch;
     justify-content: space-evenly;
-    margin-right: 15px;
-    margin-left:0px;
+    margin-right: 10px;
+    margin-left:10px;
 }
 
 .slider-group {
@@ -12,7 +12,8 @@
     flex-direction: column;
     align-items: center; /* in-direction */
     justify-content: center;/* off-direction */
-    margin-right:45px;
+    text-align: center;
+    width: 30%;
 }
 
 .slider-submit {

@@ -37,22 +37,24 @@ function getBestTime(list){
 
 }
 
-function filterStatsList(req, l){
+function filterStatsListByQuery(req, l){
   if (req.query["userQ"] || req.query["boardSizeQ"]) {
     //console.log("filtering")
     let userQ = req.query['userQ'];
     const username = req.session.username
     if(userQ === 'mine') userQ = username ? username : req.session.id.substring(0,6)
-
     const boardSizeQ = req.query['boardSizeQ'];
-    
-    console.log(userQ,boardSizeQ);
-    return l.filter((stat)=>{
-      return (userQ === '' || stat.username === userQ) &&
-      (boardSizeQ === 'any' || stat.boardSize.rows + 'x' + stat.boardSize.columns === boardSizeQ);
-    });
+
+    return filterStatsList(userQ, boardSizeQ, l);
   }
   else {return l;}
+}
+
+function filterStatsList(userQ, boardSizeQ, l){
+  return l.filter((stat)=>{
+    return (userQ === '' || stat.username === userQ) &&
+    (boardSizeQ === 'any' || stat.boardSize.rows + 'x' + stat.boardSize.columns === boardSizeQ);
+  });
 }
 
 
@@ -193,27 +195,29 @@ app.post('/', async (req,res) => {
     //if get request is a fetch
     console.log("receiving json")
     let data = req.body
-    const username = req.session.username
-    data = {...data, username: username ? username : req.session.id.substring(0,6)}
-    let bestTime;
+    let username = req.session.username
+    username = username ? username : req.session.id.substring(0,6)
+    data = {...data, username}
     const gameStat = new GameStat(data)
-    let gameStatList
+    let gameStatListGlobal, gameStatListPersonal
     try {
       await gameStat.save()
-      gameStatList = await GameStat.find()
+      gameStatListGlobal = await GameStat.find()
+      gameStatListPersonal = await GameStat.find({username})
     } catch(err){
       console.error(err)
       console.error("saving failed")
     }
     
-    const bestTimeStat = getBestTime(gameStatList)
-    if(bestTimeStat === null){
-      bestTime = 1e6
-    }else{
-      bestTime = bestTimeStat.timeCompleted
-    }
-    console.log(bestTime)
-    res.json({ bestTime});
+    console.log(gameStatListPersonal)
+    const bestPersonalTimeStat = getBestTime(gameStatListPersonal)
+    const bestGlobalTimeStat = getBestTime(gameStatListGlobal)
+    const bestPersonalTime = bestPersonalTimeStat ? bestPersonalTimeStat.timeCompleted : 1e6
+    const bestGlobalTime = bestGlobalTimeStat ? bestGlobalTimeStat.timeCompleted : 1e6
+
+    
+    console.log({ bestPersonalTime, bestGlobalTime})
+    res.json({ bestPersonalTime, bestGlobalTime});
   }else{
     //if a normal post request
 
@@ -240,7 +244,7 @@ app.get('/leaderboard', async (req, res) => {
     res.setHeader('Cache-Control', 's-max-age=1, stale-while-revalidate');
     const gameStatsList = await GameStat.find();
     // console.log(gameStatsList);
-    let filteredList = filterStatsList(req, gameStatsList)
+    let filteredList = filterStatsListByQuery(req, gameStatsList)
     let sortedFilteredList = sortStats(req, filteredList)
     res.render('leaderboard.hbs', {'gameStatsList' : sortedFilteredList, css: 'leaderboard.css',subtitle: 'Game Statistics'});
     
@@ -264,10 +268,10 @@ app.get('/rules', (req, res) => {
 // handle 
 
 
-export default app;
+//export default app;
 
 
 
-//app.listen(process.env.PORT || 3000);
+app.listen(process.env.PORT || 3000);
 
 
