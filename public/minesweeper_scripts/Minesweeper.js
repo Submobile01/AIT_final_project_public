@@ -54,7 +54,7 @@ async function setup() {
 
   const volumeSlider = document.getElementById("volume-slider");
   updateSoundVolume(config);
-  if(volumeSlider) {volumeSlider.addEventListener("input", updateSoundVolume);}
+  if(volumeSlider) {volumeSlider.addEventListener("input", e => updateSoundVolume(config));}
 
 
   for (const element of document.getElementsByClassName("p5Canvas")) {
