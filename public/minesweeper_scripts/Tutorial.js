@@ -1,97 +1,109 @@
 
-    let config;
-    setup = function(){
-        canvas1 = createCanvas(100, 200);
-        canvas1.parent('canvas1')
-        config = {};
-        config.clickCount = 0
-        // canvasDiv = document.getElementById("canvas-container");
-        // if(canvasDiv) canvasDiv.appendChild(gameCanvas);
-        rows = 4;
-        columns = 2;
-        config.boardSize = {rows,columns};
-        config.remainingBlocks = document.getElementById("remaining-blocks");
-        updateRemainingBlocks(config);
+let config;
 
-        //config.densMine = 0.18;
-        boardSetup = [[-1,0],[0,0],[0,0],[0,0]]
-        const slider = document.getElementById("slider");
-        const saveButton = document.getElementById("saveButton"); 
-        if(slider) {slider.addEventListener("input", ()=>{
-            document.getElementById("sliderValue").innerHTML = "Mine density is <strong>" + slider.value + "%</strong>    ";
-        });}
-        if(saveButton) {saveButton.addEventListener("click", function() {
-            config.densMine = parseInt(slider.value)/100;
-            // Update the game variable using the slider value
-            restart(config,boardSetup);
-            console.log("mine density is ", config.densMine);
-        });}
-        
-        restart(config,boardSetup);
+//let myp5 = new p5(s,'canvas1');
+let s1  = (sketch) => { 
+  setup = () => {
+      const w = 100
+      const h = 200
+      canvas1 = createCanvas(w, h);
+      sketch.height = h
+      sketch.width = w;
+      canvas1.parent('canvas1')
+      config = {};
+      config.clickCount = 0
+      // canvasDiv = document.getElementById("canvas-container");
+      // if(canvasDiv) canvasDiv.appendChild(gameCanvas);
+      rows = 4;
+      columns = 2;
+      config.boardSize = {rows,columns};
+      config.remainingBlocks = document.getElementById("remaining-blocks");
+      updateRemainingBlocks(config);
 
-        //load
-        chu = loadSound("/data/chu.wav");
-        yes = loadSound("/data/yes.wav");
-        hua = loadSound("/data/hua.wav");
-        bang = loadSound("/data/bang.wav");
-        wow = loadSound("/data/wow.wav");
-        ding = loadSound("/data/ding.wav");
-        config.soundFiles = {chu,yes,hua,bang,wow,ding};
+      //config.densMine = 0.18;
+      boardSetup = {}
+      boardSetup.numMine = 1
+      boardSetup.numBlocks = 2
+      boardSetup.mines = [[0,0],[-1,0],[0,0],[0,0]]
+      boardSetup.states = [[0,2],[0,2],[2,2],[2,2]]
+      const slider = document.getElementById("slider");
+      const saveButton = document.getElementById("saveButton"); 
+      if(slider) {slider.addEventListener("input", ()=>{
+          document.getElementById("sliderValue").innerHTML = "Mine density is <strong>" + slider.value + "%</strong>    ";
+      });}
+      if(saveButton) {saveButton.addEventListener("click", function() {
+          config.densMine = parseInt(slider.value)/100;
+          // Update the game variable using the slider value
+          restart(config,boardSetup,sketch);
+          console.log("mine density is ", config.densMine);
+      });}
+      //console.log(sketch)
+      restart(config,boardSetup,sketch);
 
-        const volumeSlider = document.getElementById("volume-slider");
-        //updateSoundVolume(config);
-        //if(volumeSlider) {volumeSlider.addEventListener("input", updateSoundVolume);}
+      //load
+      chu = loadSound("/data/chu.wav");
+      yes = loadSound("/data/yes.wav");
+      hua = loadSound("/data/hua.wav");
+      bang = loadSound("/data/bang.wav");
+      wow = loadSound("/data/wow.wav");
+      ding = loadSound("/data/ding.wav");
+      config.soundFiles = {chu,yes,hua,bang,wow,ding};
+
+      const volumeSlider = document.getElementById("volume-slider");
+      //updateSoundVolume(config);
+      //if(volumeSlider) {volumeSlider.addEventListener("input", updateSoundVolume);}
 
 
-        for (const element of document.getElementsByClassName("p5Canvas")) {
-            element.addEventListener("contextmenu", (e) => e.preventDefault());
-        }
-    };
+      for (const element of document.getElementsByClassName("p5Canvas")) {
+          element.addEventListener("contextmenu", (e) => e.preventDefault());
+      }
+  };
 
-    draw = function(){
-        if (config.gameStage === 1) {
+  draw = () => {
+      if (config.gameStage === 1) {
 
-        } else if (config.gameStage === 2) {
-          //drawRestart();
-          //drawAllMines();
-        } else {
-          for (let i = 0; i < config.boardSize.rows; i++) {
-            for (let j = 0; j < config.boardSize.columns; j++) {
-              config.blocks[i][j].drawIt();
-            }
+      } else if (config.gameStage === 2) {
+        //drawRestart();
+        //drawAllMines();
+      } else {
+        for (let i = 0; i < config.boardSize.rows; i++) {
+          for (let j = 0; j < config.boardSize.columns; j++) {
+            config.blocks[i][j].drawIt();
           }
-          drawWinBoard( config);
-          for (let i = 0; i < config.fireworks.length; i++) {
-            if (config.fireworks[i].inBound()) {
-              config.fireworks[i].drawIt();
-            }
-          }
         }
-    };
-    mousePressed=function(){
-        if (config.gameStage === 1) {
-          const y = Math.floor(mouseY / config.sideL);
-          const x = Math.floor(mouseX / config.sideL);
-          if(0 <= y && 0 <= x && y < config.boardSize.rows && x < config.boardSize.columns){
-            const theBlock = config.blocks[y][x];
-          
-          //console.log(theBlock.colorCode);
-            if (mouseButton === LEFT) {
-              config.buttonCount++;
-              lightBlock(y, x, 3, config);
-            } else if (mouseButton === RIGHT) {
-              config.buttonCount++;
-            }
-            if ( theBlock.getState() === Block.REVEALEDSTATE) {
-              lightAround(y, x, Block.LIGHTEDSTATE, config);
-            }
+        drawWinBoard( config,sketch);
+        for (let i = 0; i < config.fireworks.length; i++) {
+          if (config.fireworks[i].inBound()) {
+            config.fireworks[i].drawIt();
           }
         }
       }
-    mouseReleased = async function(){
-        // when playing
-        console.log(mouseButton);
-        if (config.gameStage === 1) {
+  };
+  mousePressed = () => {
+      if (config.gameStage === 1) {
+        const y = Math.floor(mouseY / config.sideL);
+        const x = Math.floor(mouseX / config.sideL);
+        if(0 <= y && 0 <= x && y < config.boardSize.rows && x < config.boardSize.columns){
+          const theBlock = config.blocks[y][x];
+        
+        //console.log(theBlock.colorCode);
+          if (mouseButton === LEFT) {
+            config.buttonCount++;
+            lightBlock(y, x, 3, config);
+          } else if (mouseButton === RIGHT) {
+            config.buttonCount++;
+          }
+          if ( theBlock.getState() === Block.REVEALEDSTATE) {
+            lightAround(y, x, Block.LIGHTEDSTATE, config);
+          }
+        }
+      }
+    }
+  mouseReleased = async () => {
+      // when playing
+      console.log(mouseButton);
+      console.log(sketch.height,sketch.width)
+      if (config.gameStage === 1) {
         const y = Math.floor(mouseY / config.sideL);
         const x = Math.floor(mouseX / config.sideL);
         if(!(0 <= y && 0 <= x && y < config.boardSize.rows && x < config.boardSize.columns)) return; 
@@ -138,48 +150,49 @@
             // theBlock.drawIt();
         }
         updateRemainingBlocks( config);
-        if (config.blockCount === config.boardSize.rows * config.boardSize.columns - config.numMine) {
-            config.soundFiles.yes.play();
-            config.gameStage = 3;
-            config.endTime = hour() * 3600 + minute() * 60 + second();
-            config.bestTimes = await fetchBestTime( config);
-            console.log(config.bestTimes.bestGlobalTime, config.bestTimes.bestGlobalTime)
-            for (let i = 0; i < 8; i++) {//generate config.fireworks
-            let ranSign = 1;
-            if (random(2) > 1) {ranSign = -1;}
-            const xs = random(10) * ranSign;
-            const ys = -6 - random(8);
-            const rs = xs * 0.05;
-            const re = 140 + floor(random(100));
-            const gr = 100 + floor(random(90));
-            const bl = 100 + floor(random(90));
-            config.fireworks.push(new Firework(rs, xs, ys, re, gr, bl));
-            }
+        checkSucceeded(config,boardSetup)
+        // if (config.blockCount === config.boardSize.rows * config.boardSize.columns - config.numMine) {
+        //     config.soundFiles.yes.play();
+        //     config.gameStage = 3;
+        //     config.endTime = hour() * 3600 + minute() * 60 + second();
+        //     config.bestTimes = await fetchBestTime( config);
+        //     console.log(config.bestTimes.bestGlobalTime, config.bestTimes.bestGlobalTime)
+        //     for (let i = 0; i < 8; i++) {//generate config.fireworks
+        //     let ranSign = 1;
+        //     if (random(2) > 1) {ranSign = -1;}
+        //     const xs = random(10) * ranSign;
+        //     const ys = -6 - random(8);
+        //     const rs = xs * 0.05;
+        //     const re = 140 + floor(random(100));
+        //     const gr = 100 + floor(random(90));
+        //     const bl = 100 + floor(random(90));
+        //     config.fireworks.push(new Firework(rs, xs, ys, re, gr, bl));
+        //     }
             
-        }
-        }
-    
-        // when gameOver
-        if (config.gameStage === 2) {
+        // }
+      }
+  
+      // when gameOver
+      if (config.gameStage === 2) {
         drawAllMines( config);
-        drawRestart( config);
+        drawRestart( config,sketch);
         if (
-            mouseX > width * 0.45 &&
-            mouseX < width * 0.55 &&
-            mouseY > height * 0.56 &&
-            mouseY < height * 0.66
+            mouseX > sketch.width * 0.45 &&
+            mouseX < sketch.width * 0.55 &&
+            mouseY > sketch.height * 0.56 &&
+            mouseY < sketch.height * 0.66
         ) {
-            restart( config);
+            restart( config,boardSetup,sketch);
         }
         }
         if (config.gameStage === 3) {
         if (
-            mouseX > width * 0.45 &&
-            mouseX < width * 0.55 &&
-            mouseY > height * 0.56 &&
-            mouseY < height * 0.66
+            mouseX > sketch.width * 0.45 &&
+            mouseX < sketch.width * 0.55 &&
+            mouseY > sketch.height * 0.56 &&
+            mouseY < sketch.height * 0.66
         ) {
-            restart( config);
+            restart( config,boardSetup,sketch);
         } else {
             config.soundFiles.hua.play();
         }
@@ -194,10 +207,10 @@
             const bl = 100 + floor(random(90));
             config.fireworks.push(new Firework(rs, xs, ys, re, gr, bl));
         }
-        }
-        //console.log(config.boardSize.rows * config.boardSize.columns - config.numMine - config.blockCount);
-    }
+      }
+      //console.log(config.boardSize.rows * config.boardSize.columns - config.numMine - config.blockCount);
+  }
+}
 
-
-//let p5Canvas = new p5(s1);
+let p5Canvas = new p5(s1);
 //let p5Canvas1 = new p5(s1,'canvas1')
