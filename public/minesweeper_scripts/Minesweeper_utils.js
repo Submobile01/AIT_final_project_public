@@ -1,5 +1,5 @@
-function checkSucceeded(config, boardSetup){
-  const puzzlePara = document.getElementById('puzzlePara')
+function checkSucceeded(config, boardSetup, i){
+  const puzzlePara = document.getElementById('puzzlePara' + i)
   if(config.flagCount + config.blockCount == boardSetup.numMine + boardSetup.numBlocks){
      
     let allCorrect = true
@@ -42,8 +42,8 @@ function genField(numMine, config,boardSetup) {
   else{
       const f = new Array(config.boardSize.rows).fill(0).map(() => new Array(config.boardSize.columns).fill(0));
       for (let i = 0; i < numMine; i++) {
-      const ran = floor(Math.random() * config.boardSize.rows * config.boardSize.columns);
-      const row = floor(ran / config.boardSize.columns);
+      const ran = Math.floor(Math.random() * config.boardSize.rows * config.boardSize.columns);
+      const row = Math.floor(ran / config.boardSize.columns);
       const column = ran % config.boardSize.columns;
       if (f[row][column] === 0) {
           f[row][column] = -1;
@@ -191,32 +191,32 @@ function countFlags(i, j,config) {
  * @param {integer} i vertical index of the block selected
  * @param {integer} j horizontal index of the block selected
  */
-function flipAround(i, j, config) {
+function flipAround(i, j, config, sketch) {
   if (i !== 0) {
     if (j !== 0) {
-      activateBlock(i - 1, j - 1, config);
+      activateBlock(i - 1, j - 1, config, sketch);
     }
     if (j !== config.boardSize.columns - 1) {
-      activateBlock(i - 1, j + 1, config);
+      activateBlock(i - 1, j + 1, config, sketch);
     }
-    activateBlock(i - 1, j, config);
+    activateBlock(i - 1, j, config, sketch);
   }
   // not right most
   if (i !== config.boardSize.rows - 1) {
     if (j !== 0) {
-      activateBlock(i + 1, j - 1, config);
+      activateBlock(i + 1, j - 1, config, sketch);
     }
     if (j !== config.boardSize.columns - 1) {
-      activateBlock(i + 1, j + 1, config);
+      activateBlock(i + 1, j + 1, config, sketch);
     }
-    activateBlock(i + 1, j, config);
+    activateBlock(i + 1, j, config, sketch);
   }
   // neutral
   if (j !== 0) {
-    activateBlock(i, j - 1, config);
+    activateBlock(i, j - 1, config, sketch);
   }
   if (j !== config.boardSize.columns - 1) {
-    activateBlock(i, j + 1, config);
+    activateBlock(i, j + 1, config, sketch);
   }
 }
 
@@ -281,13 +281,13 @@ function drawAllMines(config) {
  * @param {integer} i vertical index of the block selected
  * @param {integer} j horizontal index of the block selected
  */
-function activateBlock(i, j, config) {
+function activateBlock(i, j, config,sketch) {
   const theBlock = config.blocks[i][j];
   if (theBlock.getState() === Block.ORIGSTATE || theBlock.getState() === 3) {//?
     if (theBlock.getNumber() === -1) {
       config.gameStage = 2;
       config.soundFiles.bang.play();
-      config.endTime = hour() * 3600 + minute() * 60 + second();
+      config.endTime = sketch.hour() * 3600 + sketch.minute() * 60 + sketch.second();
     } else if (config.blockCount === config.boardSize.rows * config.boardSize.columns - config.numMine) {
     } else if (theBlock.getNumber() === 0) {
       triggerZero(i, j, config);
@@ -327,26 +327,26 @@ function drawRestart(config, sketch) {
   const w = sketch ? sketch.width : width;
   const h = sketch ? sketch.height : height;
   //the rectangle
-  fill(130, 130, 210, 130);
-  noStroke();
-  rect(w / 3, h / 4, w / 3, h / 2, 55);
+  sketch.fill(130, 130, 210, 130);
+  sketch.noStroke();
+  sketch.rect(w / 3, h / 4, w / 3, h / 2, 55);
 
   //the words
   let bestTimeString;
   if (bestTime === undefined) {bestTimeString = "--";}
   else {bestTimeString = bestTime + "";}
-  textFont("Arial", w / 36);
-  fill(0);
-  text("Time: " + "--", w * 0.35, h * 0.35);
-  text("Best Time: " + bestTimeString, w * 0.35, h * 0.42);
+  sketch.textFont("Arial", w / 36);
+  sketch.fill(0);
+  sketch.text("Time: " + "--", w * 0.35, h * 0.35);
+  sketch.text("Best Time: " + bestTimeString, w * 0.35, h * 0.42);
 
   
   //restart Button
-  fill(color(60));
-  noStroke();
-  rect(w * 0.45, h * 0.56, w / 10, h * 0.1);
-  fill(160, 70, 70, 200);
-  text("Restart", w * 0.46, h * 0.62);
+  sketch.fill(color(60));
+  sketch.noStroke();
+  sketch.rect(w * 0.45, h * 0.56, w / 10, h * 0.1);
+  sketch.fill(160, 70, 70, 200);
+  sketch.text("Restart", w * 0.46, h * 0.62);
 }
 
 /**
@@ -354,9 +354,8 @@ function drawRestart(config, sketch) {
  * and regenerate/redraw the blocks
  */
 function restart(config,boardSetup,sketch) {
-  const w = sketch ? sketch.w : width;
+  const w = sketch ? sketch.width : width;
   const h = sketch ? sketch.height : height;
-  console.log(w)
   
   config.gameStage = 1;
   config.flagCount = 0;
@@ -365,14 +364,14 @@ function restart(config,boardSetup,sketch) {
   if(boardSetup){
     config.numMine = boardSetup.numMine
   }else{
-    config.numMine = round(config.boardSize.rows * config.boardSize.columns * config.densMine);
+    config.numMine = sketch.round(config.boardSize.rows * config.boardSize.columns * config.densMine);
   }
   
   
   config.sideL = h / config.boardSize.rows;
   config.blocks = new Array(config.boardSize.rows);
   config.fireworks = [];
-  background(0);
+  if(sketch)sketch.background(0);
   
   reGenBlocks(config,boardSetup,sketch);
 
@@ -396,7 +395,7 @@ function reGenBlocks(config,boardSetup,sketch) {
   for (let i = 0; i < config.boardSize.rows; i++) {
     config.blocks[i] = new Array(config.boardSize.columns);
     for (let j = 0; j < config.boardSize.columns; j++) {
-      config.blocks[i][j] = new Block(j, i, h / config.boardSize.rows);
+      config.blocks[i][j] = new Block(j, i, h / config.boardSize.rows,sketch);
     }
   }
   //generate mines and numbers
@@ -409,9 +408,9 @@ function drawWinBoard(config,sketch) {
   const w = sketch ? sketch.width : width;
   const h = sketch ? sketch.height : height;
   
-  fill(color(130, 130, 210, 130));
-  noStroke();
-  rect(w / 3, h / 4, w / 3, h / 2, 55);
+  sketch.fill(sketch.color(130, 130, 210, 130));
+  sketch.noStroke();
+  sketch.rect(w / 3, h / 4, w / 3, h / 2, 55);
 
   //the words
   let bestTimeString;
@@ -428,19 +427,19 @@ function drawWinBoard(config,sketch) {
 
   if (bestTime === 0) {bestTimeString = "--";}
   else {bestTimeString = bestTime + "";}
-  textFont("Times New Roman",w / 48);
-  text("Click Anywhere for more FUN", w * 0.38, h * 0.29);
-  fill(44, 66, 132);
-  textFont("Arial", int(w / 36.0));
-  text("Time: " + thisTime, w * 0.35, h * 0.35);
-  text("Best Time: " + bestTimeString, w * 0.35, h * 0.42);
+  sketch.textFont("Times New Roman",w / 48);
+  sketch.text("Click Anywhere for more FUN", w * 0.38, h * 0.29);
+  sketch.fill(44, 66, 132);
+  sketch.textFont("Arial", Math.floor(w / 36.0));
+  sketch.text("Time: " + thisTime, w * 0.35, h * 0.35);
+  sketch.text("Best Time: " + bestTimeString, w * 0.35, h * 0.42);
 
   //restart Button
-  fill(color(60, 200));
-  noStroke();
-  rect(w * 0.45, h * 0.56, w / 10, h * 0.1);
-  fill(0);
-  text("Restart", w * 0.46, h * 0.62);
+  sketch.fill(sketch.color(60, 200));
+  sketch.noStroke();
+  sketch.rect(w * 0.45, h * 0.56, w / 10, h * 0.1);
+  sketch.fill(0);
+  sketch.text("Restart", w * 0.46, h * 0.62);
 }
 
 async function fetchBestTime(config){
@@ -473,8 +472,8 @@ async function fetchBestTime(config){
 }
 
 
-function drawMenu() {
-  background(200);
+function drawMenu(sketch) {
+  if(sketch) sketch.background(200);
 }    
 
 /**

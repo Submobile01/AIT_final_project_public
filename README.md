@@ -71,9 +71,10 @@ An Example Game Statitics Item:
 
 * (3 points) Vercel Deployment
     * used Vercel to create a serverless connection
-* (2 points) P5.js 
+* (4 points) P5.js 
     * used p5.js to create nice 2d graphics and interactions
-    * good for showing the game 
+    * used p5.sound.js to add custom audio when different game action triggers
+    * used instance mode in tutorial to create multiple canvas
 * (1 point) DOM manipulation
     * used DOM elements before taught
 * (3 points) Minesweeper AI
