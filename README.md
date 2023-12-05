@@ -69,19 +69,17 @@ An Example Game Statitics Item:
 ## Research Topics
 
 
-* (3 points) Vercel Deployment
+* (2 points) Vercel Deployment
     * used Vercel to create a serverless connection
-* (4 points) P5.js 
+* (5 points) P5.js 
     * used p5.js to create nice 2d graphics and interactions
-    * used p5.sound.js to add custom audio when different game action triggers
     * used instance mode in tutorial to create multiple canvas
 * (1 point) DOM manipulation
     * used DOM elements before taught
-* (3 points) Minesweeper AI
-    * used probablistic algorithms to find the best move
-    * used for giving hints for player
+* (1 point) p5.sound.js
+    * used p5.sound.js to add custom audio when different game action triggers
 
-9 points total out of 8 required points 
+9 points total out of 10 required points 
 
 
 ## [Link to Initial Main Project File](index.mjs) 
@@ -91,6 +89,4 @@ An Example Game Statitics Item:
 
 1. [p5.js reference](https://p5js.org/reference/) - (add link to source code that was based on this)
   * [p5.js](public/libraries/p5.js), [p5.min.js](public/libraries/p5.min.js), [p5.sound.js](public/libraries/p5.sound.js) are all library code
-2. [tutorial on vue.js](https://vuejs.org/v2/guide/) - (add link to source code that was based on this)
-  * not used yet
 
