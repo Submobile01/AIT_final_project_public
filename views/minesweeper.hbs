@@ -22,7 +22,7 @@
                 </div>
                 <div class="slider-group">
                     <p>Current User: {{username}}</p>
-                    <p>(choose your username/log in <strong>below</strong>)</p>
+                    <p>(choose your username/log in ⬇️⬇️⬇️<strong>below</strong>⬇️⬇️⬇️)</p>
                     <span id="remaining-blocks"> </span>
                 </div>
                 
@@ -45,8 +45,15 @@
             <input type="text" id="password" name="password" placeholder="password" ><br>
             <button type="submit" id="userSubmit"> Submit </button>
             {{#if loginfailed}}
-                <p style="color:red">Login failed. Incorrect username or password.</p>
+                <p style="color:red">Login failed. Registed username and Incorrect password.</p>
+            {{else}}
+                {{#if registering}}
+                <p style="color:black">Successfully registered; Your username is {{username}}.</p>
+                {{else}}
+                <p style="color:black">You are logged in; Your username is {{username}}.</p>
+                {{/if}}
             {{/if}}
+            
         </form>
         
         

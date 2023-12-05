@@ -209,7 +209,7 @@ function createSketchFn(boardSetup,index){
     }
   }
 }
-numSketches = 2
+
 let currentSketch;
 
 boardSetup = {}
@@ -227,14 +227,51 @@ boardSetup2.numBlocks = 2
 boardSetup2.mines = [[-1,0],[0,0],[0,0],[0,0]]
 boardSetup2.states = [[0,2],[0,2],[2,2],[2,2]]
 
-let boardSetupList = [boardSetup, boardSetup2]
+let boardSetupList = [
+  {
+    rows: 4,
+    columns: 2,
+    numMine: 3,
+    numBlocks: 1,
+    mines: [[-1,0],[-1,0],[-1,0],[0,0]],
+    states: [[0,2],[0,2],[0,2],[0,2]]
+  },
+  {
+    rows: 4,
+    columns: 2,
+    numMine: 1,
+    numBlocks: 1,
+    mines: [[0,0],[-1,0],[0,0],[0,0]],
+    states: [[0,2],[0,2],[2,2],[2,2]]
+  },
+  {
+    rows: 2,
+    columns: 4,
+    numMine: 2,
+    numBlocks: 1,
+    mines: [[-1,-1,0,0],[0,0,0,0]],
+    states: [[0,0,0,2],[2,2,2,2]]
+  },
+  {
+    rows: 2,
+    columns: 4,
+    numMine: 1,
+    numBlocks: 1,
+    mines: [[0,-1,0,0],[0,0,0,0]],
+    states: [[0,0,2,2],[2,2,2,2]]
+  },
+]
+let numSketches = boardSetupList.length
+
+//let boardSetupList = [boardSetup, boardSetup2]
 let sList = [] 
 for(let i=0; i<numSketches; i++){
   sList.push(createSketchFn(boardSetupList[i],(i+1)))
+  new p5(sList[i]);
 }
-new p5(sList[0]);
+
 //currentSketch.remove()
-new p5(sList[1])
+//new p5(sList[1])
 
 
 

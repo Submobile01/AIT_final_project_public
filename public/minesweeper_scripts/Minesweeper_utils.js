@@ -1,7 +1,8 @@
 function checkSucceeded(config, boardSetup, i){
   const puzzlePara = document.getElementById('puzzlePara' + i)
+  console.log(config.flagCount, config.blockCount, boardSetup.numMine, boardSetup.numBlocks)
   if(config.flagCount + config.blockCount == boardSetup.numMine + boardSetup.numBlocks){
-     
+    
     let allCorrect = true
     for(let i=0; i<config.boardSize.rows; i++){
       for(let j=0; j<config.boardSize.columns; j++){
@@ -342,7 +343,7 @@ function drawRestart(config, sketch) {
 
   
   //restart Button
-  sketch.fill(color(60));
+  sketch.fill(sketch.color(60));
   sketch.noStroke();
   sketch.rect(w * 0.45, h * 0.56, w / 10, h * 0.1);
   sketch.fill(160, 70, 70, 200);

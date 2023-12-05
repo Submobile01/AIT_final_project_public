@@ -52,7 +52,7 @@ function filterStatsListByQuery(req, l){
 
 function filterStatsList(userQ, boardSizeQ, l){
   return l.filter((stat)=>{
-    return (userQ === '' || stat.username === userQ) &&
+    return (userQ === '' || userQ === 'all' || stat.username === userQ) &&
     (boardSizeQ === 'any' || stat.boardSize.rows + 'x' + stat.boardSize.columns === boardSizeQ);
   });
 }
@@ -194,7 +194,12 @@ app.get('/', (req, res) => {
       //if get request is a fetch
     }else{
       const username = req.session.username ? req.session.username : req.session.id.substring(0,6)
-      res.render('minesweeper.hbs', {subtitle: 'Main Game', css: 'game.css', username: username, loginfailed: (req.query.loginfailed == 'true')});
+      res.render('minesweeper.hbs', {subtitle: 'Main Game',
+                                    css: 'game.css',
+                                    username: username, 
+                                    loginfailed: (req.query.loginfailed === 'true'),
+                                    registering: (req.query.registering === 'true')
+                                    });
     } 
 })
 
@@ -246,12 +251,12 @@ app.post('/', async (req,res) => {
       });
       await user.save();
       req.session.username = username
-      res.redirect('/?loginfailed=false');
+      res.redirect('/?loginfailed=false&registering=true');
     }else if(msg === 'wrong password'){
-      res.redirect('/?loginfailed=true')
+      res.redirect('/?loginfailed=true&registering=false')
     }else if(msg === 'success'){
       req.session.username = username
-      res.redirect('/?loginfailed=false');
+      res.redirect('/?loginfailed=false&registering=false');
     }
     //save username to session
     
