@@ -18,8 +18,7 @@ An Example User:
 ```javascript
 {
   username: "shannonshopper",
-  hash:  "an optional password hash",
-  IdList: [1, 3, 5, 6]
+  password:  "an optional password",
 }
 ```
 
@@ -28,7 +27,7 @@ An Example Game Statitics Item:
 ```javascript
 {
   GameId: 1,
-  Difficulty: "hard",
+  Difficulty: 0.18,
   BoardSize: {height:15, width:30}
   clicks: 79,
   timeCompleted: 06/02/2023// timestamp
