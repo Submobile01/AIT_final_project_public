@@ -102,6 +102,18 @@ function sortStats(req, l) {
     return l;
   }
 }
+
+async function checkLogin(username, password){
+  const user = await User.findOne({username})
+  console.log(user)
+  if(user){
+    if(password.trim() === user.password){
+      return 'success'
+    }
+    return 'wrong password'
+  }
+  return 'user not found'
+}
 /** Utility functions ends */
 
 
@@ -182,7 +194,7 @@ app.get('/', (req, res) => {
       //if get request is a fetch
     }else{
       const username = req.session.username ? req.session.username : req.session.id.substring(0,6)
-      res.render('minesweeper.hbs', {subtitle: 'Main Game', css: 'game.css', username: username});
+      res.render('minesweeper.hbs', {subtitle: 'Main Game', css: 'game.css', username: username, loginfailed: (req.query.loginfailed == 'true')});
     } 
 })
 
@@ -223,16 +235,28 @@ app.post('/', async (req,res) => {
 
     const { username, password } = req.body;
     
-
+    const msg = await checkLogin(username, password)
+    console.log(msg)
     //Create a new review document in your MongoDB using Mongoose
-    const user = new User({
-        username,
-        password,
-    });
+    if(msg === 'user not found'){
+      console.log('creating new user')
+      const user = new User({
+          username,
+          password,
+      });
+      await user.save();
+      req.session.username = username
+      res.redirect('/?loginfailed=false');
+    }else if(msg === 'wrong password'){
+      res.redirect('/?loginfailed=true')
+    }else if(msg === 'success'){
+      req.session.username = username
+      res.redirect('/?loginfailed=false');
+    }
     //save username to session
-    req.session.username = username
-    await user.save();
-    res.redirect('/');
+    
+    
+    
   }
     
 })

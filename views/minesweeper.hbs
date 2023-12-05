@@ -44,8 +44,11 @@
             <label for="password">Password (Optional):</label>
             <input type="text" id="password" name="password" placeholder="password" ><br>
             <button type="submit" id="userSubmit"> Submit </button>
+            {{#if loginfailed}}
+                <p style="color:red">Login failed. Incorrect username or password.</p>
+            {{/if}}
         </form>
-
+        
         
     </div>
 
