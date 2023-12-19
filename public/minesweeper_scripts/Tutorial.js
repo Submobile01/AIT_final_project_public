@@ -3,8 +3,9 @@
 
 //let myp5 = new p5(s,'canvas1');
 function createSketchFn(boardSetup,index){
-  let config;
+  
   return (sketch) => { 
+    let config;
     sketch.setup = function (){
         sketch.config = config
         const w = 50*boardSetup.columns
@@ -36,6 +37,13 @@ function createSketchFn(boardSetup,index){
         });}
         //console.log(sketch)
         restart(config,boardSetup,sketch);
+        const restartBtn = document.getElementById('restartBtn'+index);
+        const puzzlePara = document.getElementById('puzzlePara'+index);
+        restartBtn.addEventListener('click', (evt) => {
+          evt.preventDefault();
+          restart(config, boardSetup,sketch);
+          puzzlePara.textContent = ''
+        })
 
         //load
         chu = sketch.loadSound("/data/chu.wav");
@@ -210,138 +218,153 @@ function createSketchFn(boardSetup,index){
   }
 }
 
-let currentSketch;
+const nextFn = (event, blockIdx) => {
+  event.preventDefault()
+  if(sketchIndices[blockIdx] < numSketches[blockIdx]-1){
+    sketchIndices[blockIdx]++
+    console.log(sketchIndices[blockIdx],sLists[blockIdx][sketchIndices[blockIdx]])
+    // let childNodes = canvasContainer.childNodes
+    // childNodes = [...childNodes]
+    // const canvas = childNodes
+    // console.log(childNodes.slice(0,4),canvas, i)
+    canvasContainers[blockIdx].innerHTML = ''
+    puzzleParas[blockIdx].textContent = ''
+    new p5(sLists[blockIdx][sketchIndices[blockIdx]])
+  }
+  
+  
+}
 
-boardSetup = {}
-boardSetup.rows = 4
-boardSetup.columns = 2
-boardSetup.numMine = 1
-boardSetup.numBlocks = 2
-boardSetup.mines = [[0,0],[-1,0],[0,0],[0,0]]
-boardSetup.states = [[0,2],[0,2],[2,2],[2,2]]
-boardSetup2 = {}
-boardSetup2.rows = 4
-boardSetup2.columns = 2
-boardSetup2.numMine = 1
-boardSetup2.numBlocks = 2
-boardSetup2.mines = [[-1,0],[0,0],[0,0],[0,0]]
-boardSetup2.states = [[0,2],[0,2],[2,2],[2,2]]
 
-let boardSetupList = [
-  {
-    rows: 4,
-    columns: 2,
-    numMine: 3,
-    numBlocks: 1,
-    mines: [[-1,0],[-1,0],[-1,0],[0,0]],
-    states: [[0,2],[0,2],[0,2],[0,2]]
-  },
-  {
-    rows: 4,
-    columns: 2,
-    numMine: 1,
-    numBlocks: 1,
-    mines: [[0,0],[-1,0],[0,0],[0,0]],
-    states: [[0,2],[0,2],[2,2],[2,2]]
-  },
-  {
-    rows: 2,
-    columns: 4,
-    numMine: 2,
-    numBlocks: 1,
-    mines: [[-1,-1,0,0],[0,0,0,0]],
-    states: [[0,0,0,2],[2,2,2,2]]
-  },
-  {
-    rows: 2,
-    columns: 4,
-    numMine: 1,
-    numBlocks: 1,
-    mines: [[0,-1,0,0],[0,0,0,0]],
-    states: [[0,0,2,2],[2,2,2,2]]
-  },
-]
-let numSketches = boardSetupList.length
+
+const prevFn = (event, blockIdx) => {
+  event.preventDefault()
+  if(sketchIndices[blockIdx] > 0){
+    sketchIndices[blockIdx]--
+    // const childNodes = canvasContainer.childNodes
+    // childNodes = [...childNodes]
+    // const canvas = childNodes
+    console.log(sketchIndices[blockIdx],sLists[blockIdx][sketchIndices[blockIdx]])
+    // console.log(childNodes.slice(0,4),canvas, i)
+    canvasContainers[blockIdx].innerHTML = ''
+    puzzleParas[blockIdx].textContent = ''
+    new p5(sLists[blockIdx][sketchIndices[blockIdx]])
+  }
+  
+}
+
+// let currentSketch;
+
+let boardSetupLists = [
+  [
+    {
+      rows: 2,
+      columns: 3,
+      numMine: 3,
+      numBlocks: 0,
+      mines: [[-1,-1,-1],[0,0,0]],
+      states: [[0,0,0],[2,2,2]]
+    },
+    {
+      rows: 2,
+      columns: 4,
+      numMine: 2,
+      numBlocks: 0,
+      mines: [[-1,-1,0,0],[0,0,0,0]],
+      states: [[0,0,2,2],[2,2,2,2]]
+    }
+  ],
+  [
+    {
+      rows: 4,
+      columns: 2,
+      numMine: 3,
+      numBlocks: 1,
+      mines: [[-1,0],[-1,0],[-1,0],[0,0]],
+      states: [[0,2],[0,2],[0,2],[0,2]]
+    },
+    {
+      rows: 4,
+      columns: 2,
+      numMine: 1,
+      numBlocks: 1,
+      mines: [[0,0],[-1,0],[0,0],[0,0]],
+      states: [[0,2],[0,2],[2,2],[2,2]]
+    },
+    {
+      rows: 2,
+      columns: 4,
+      numMine: 2,
+      numBlocks: 1,
+      mines: [[-1,-1,0,0],[0,0,0,0]],
+      states: [[0,0,0,2],[2,2,2,2]]
+    },
+    {
+      rows: 2,
+      columns: 4,
+      numMine: 1,
+      numBlocks: 1,
+      mines: [[0,-1,0,0],[0,0,0,0]],
+      states: [[0,0,2,2],[2,2,2,2]]
+    },
+  ],
+  
+];
+
+const nextBtns = []
+const prevBtns = []
+const canvasContainers = []
+const puzzleParas = []
+const numSketches = []
+const sketchIndices = []
+
+let sLists = [] 
+for(let blockIdx=0; blockIdx<2; blockIdx++){
+  nextBtns[blockIdx] = document.getElementById('nextBtn'+blockIdx)
+  prevBtns[blockIdx] = document.getElementById('prevBtn'+blockIdx)
+  canvasContainers[blockIdx] = document.getElementById('canvas'+blockIdx)
+  puzzleParas[blockIdx] = document.getElementById('puzzlePara'+blockIdx)
+  numSketches[blockIdx] = boardSetupLists[blockIdx].length
+
+  sLists.push([]) 
+
+  sketchIndices[blockIdx] = 0
+  for(let i=0; i<numSketches[blockIdx]; i++){
+    sLists[blockIdx].push(createSketchFn(boardSetupLists[blockIdx][i],blockIdx))
+    // new p5(sList[i]);
+  }
+  new p5(sLists[blockIdx][sketchIndices[blockIdx]]);
+  
+
+  nextBtns[blockIdx].addEventListener('click', (evt) => nextFn(evt, blockIdx))
+  prevBtns[blockIdx].addEventListener('click', (evt) => prevFn(evt, blockIdx))
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 //let boardSetupList = [boardSetup, boardSetup2]
-let sList = [] 
-for(let i=0; i<numSketches; i++){
-  sList.push(createSketchFn(boardSetupList[i],(i+1)))
-  new p5(sList[i]);
-}
+// let sList = [] 
+// for(let i=0; i<numSketches; i++){
+//   sList.push(createSketchFn(boardSetupList[i],(i+1)))
+//   new p5(sList[i]);
+// }
+
 
 //currentSketch.remove()
 //new p5(sList[1])
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// let i = 0
-
-// currentSketch = new p5(sList[i]);
-
-
-
-
-// const nextBtn = document.getElementById('nextBtn')
-// const prevBtn = document.getElementById('prevBtn')
-// const canvasContainer = document.getElementById('canvas1')
-
-// const nextFn = (event) => {
-//   event.preventDefault()
-//   if(i < numSketches-1){
-//     i++
-//     console.log(i,sList[i])
-//     // let childNodes = canvasContainer.childNodes
-//     // childNodes = [...childNodes]
-//     // const canvas = childNodes
-//     // console.log(childNodes.slice(0,4),canvas, i)
-//     canvasContainer.innerHTML = ''
-//     currentSketch = new p5(sList[i])
-//   }
-  
-  
-// }
-
-// const prevFn = (event) => {
-//   event.preventDefault()
-//   if(i > 0){
-//     i--
-//     // const childNodes = canvasContainer.childNodes
-//     // childNodes = [...childNodes]
-//     // const canvas = childNodes
-//     console.log(i,sList.length)
-//     // console.log(childNodes.slice(0,4),canvas, i)
-//     canvasContainer.innerHTML = ''
-    
-//     currentSketch = new p5(sList[i])
-//   }
-  
-// }
-
-
-// nextBtn.addEventListener('click', nextFn)
-// prevBtn.addEventListener('click', prevFn)
-
