@@ -7,6 +7,7 @@ import bodyParser from 'body-parser';
 import cors from 'cors';
 import cookieParser from 'cookie-parser'
 import connectSession from 'connect-mongodb-session'
+import {inject} from '@vercel/analytics'
 
 /** Utility functions starts*/
 
@@ -116,7 +117,7 @@ async function checkLogin(username, password){
 }
 /** Utility functions ends */
 
-
+inject();
 
 const app = express();
 const __filename = fileURLToPath(import.meta.url);
